@@ -5,6 +5,7 @@
  *
  * Props: href (string | null), variant ("pennant" | "primary" | "outline" | "maiz" | "link", default "primary"),
  *        size ("md" | "lg"), external? (new tab, rel noopener), badge? (text shown when href is null),
+ *        flag? (badge shown inside a working link, e.g. "Dirección pendiente"),
  *        srSuffix? (visually hidden text appended to the accessible name, e.g. "Abre WhatsApp"), class.
  * Slots: default (label).
  * Usage: <Button href={url} variant="outline" external srSuffix={site.ui.abreMaps}>{label}</Button>
@@ -19,6 +20,7 @@ interface Props extends Omit<HTMLAttributes<"a">, "href"> {
   size?: "md" | "lg" | undefined;
   external?: boolean;
   badge?: string | undefined;
+  flag?: string | undefined;
   srSuffix?: string | undefined;
 }
 
@@ -27,10 +29,10 @@ const button = tv({
   variants: {
     variant: {
       pennant:
-        "py-2 pl-6 pr-10 text-papel before:absolute before:inset-0 before:-z-10 before:bg-nopal before:clip-pennant before:transition-colors before:content-['']",
-      primary: "rounded-brand border-[3px] border-tinta bg-primary px-5 py-2 text-primary-foreground shadow-sello transition-colors",
-      outline: "rounded-brand border-[3px] border-tinta bg-transparent px-5 py-2 text-tinta transition-colors",
-      maiz: "rounded-brand border-[3px] border-tinta bg-maiz px-5 py-2 text-tinta shadow-sello transition-colors",
+        "py-2 pl-6 pr-10 text-papel before:absolute before:inset-0 before:-z-10 before:bg-nopal before:clip-pennant before:transition-[background-color] before:content-['']",
+      primary: "rounded-brand border-[3px] border-tinta bg-primary px-5 py-2 text-primary-foreground shadow-sello transition-[background-color,color,border-color]",
+      outline: "rounded-brand border-[3px] border-tinta bg-transparent px-5 py-2 text-tinta transition-[background-color,color,border-color]",
+      maiz: "rounded-brand border-[3px] border-tinta bg-maiz px-5 py-2 text-tinta shadow-sello transition-[background-color,color,border-color]",
       link: "px-1 py-2 text-tinta underline decoration-2 underline-offset-4",
     },
     size: { md: "text-sm sm:text-base", lg: "text-base sm:text-lg" },
@@ -46,7 +48,9 @@ const button = tv({
   defaultVariants: { variant: "primary", size: "md", interactive: true },
 });
 
-const { href, variant, size, external = false, badge, srSuffix, class: className, ...rest } = Astro.props;
+const { href, variant, size, external = false, badge, flag, srSuffix, class: className, ...rest } = Astro.props;
+const badgeClass =
+  "whitespace-nowrap rounded-sm border border-tinta bg-papel-claro px-1.5 py-0.5 text-xs font-semibold normal-case leading-none tracking-normal text-tinta";
 const classes = button({ variant, size, interactive: href !== null, class: className });
 ---
 
@@ -60,15 +64,14 @@ const classes = button({ variant, size, interactive: href !== null, class: class
       {...rest}
     >
       <slot />
+      {flag && <span class={badgeClass}>{flag}</span>}
       {srSuffix && <span class="sr-only"> ({srSuffix})</span>}
     </a>
   ) : (
     <span class={classes} {...(rest as HTMLAttributes<"span">)}>
       <slot />
       {badge && (
-        <span class="whitespace-nowrap rounded-sm border border-tinta bg-papel-claro px-1.5 py-0.5 text-xs font-semibold normal-case leading-none tracking-normal text-tinta">
-          {badge}
-        </span>
+        <span class={badgeClass}>{badge}</span>
       )}
     </span>
   )

@@ -1,12 +1,13 @@
 import type { APIRoute } from "astro";
 import { site } from "../data/site";
-import { resolve } from "../lib/pending";
+import { confirmed } from "../lib/pending";
 
 export const GET: APIRoute = () => {
-  const name = resolve(site.negocio.nombre).value ?? "Mixiotes";
+  // Pending business name: use the provisional title/short name instead of the unconfirmed candidate.
+  const confirmedName = confirmed(site.negocio.nombre);
   const manifest = {
-    name,
-    short_name: name,
+    name: confirmedName ?? site.seo.tituloProvisional,
+    short_name: confirmedName ?? site.seo.nombreCortoProvisional,
     start_url: "/",
     display: "standalone",
     background_color: "#F3E9D8",

@@ -9,6 +9,7 @@
  */
 import { site } from "../../data/site";
 import { mapsHref } from "../../lib/links";
+import { isPending } from "../../data/schema";
 import Button from "./Button.astro";
 
 interface Props {
@@ -17,9 +18,12 @@ interface Props {
   class?: string | undefined;
 }
 
+// Borrador only (production forbids pending): the search link works but is built from an unconfirmed address.
+const addressPending =
+  isPending(site.ubicacion.mapsUrl) && (isPending(site.ubicacion.calle) || isPending(site.ubicacion.colonia));
 const { variant, size, class: className } = Astro.props;
 ---
 
-<Button href={mapsHref(site)} external variant={variant} size={size} class={className} srSuffix={site.ui.abreMaps}>
+<Button href={mapsHref(site)} external variant={variant} size={size} class={className} flag={addressPending ? site.ui.direccionPendiente : undefined} srSuffix={site.ui.abreMaps}>
   <slot />
 </Button>

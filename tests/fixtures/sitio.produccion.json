@@ -12,6 +12,8 @@
   "seo": {
     "url": "https://example.com",
     "titulo": "{nombre} · Mixiotes para llevar en Tulancingo",
+    "tituloProvisional": "Mixiotes para llevar en Tulancingo",
+    "nombreCortoProvisional": "Mixiotes",
     "descripcion": "Mixiotes 100% para llevar en Tulancingo de Bravo, Hidalgo. Aparta por WhatsApp y recoge sin hacer fila. Por pieza, por orden y, para reuniones, por docena o por kilo.",
     "imagenSocial": {
       "archivo": "/og.png",
@@ -40,7 +42,7 @@
     "calle": "Calle de Prueba #1",
     "colonia": "Colonia de Prueba",
     "codigoPostal": "43600",
-    "mapsUrl": "https://maps.example.com/prueba",
+    "mapsUrl": "https://maps.app.goo.gl/prueba",
     "geo": {
       "lat": 20.0833,
       "lng": -98.3667
@@ -300,6 +302,7 @@
     "navegacionPrincipal": "Navegación principal",
     "datoPendiente": "Dato pendiente",
     "numeroPendiente": "Número pendiente",
+    "direccionPendiente": "Dirección pendiente",
     "precioPendiente": "Pendiente",
     "textoPendiente": "Pendiente",
     "fotoPendiente": "Foto pendiente",

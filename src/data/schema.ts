@@ -61,6 +61,16 @@ export const DAYS = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabad
 export const PRESENTATION_TYPES = ["pieza", "orden", "docena", "kilo"] as const;
 export const SAZON_ILLUSTRATIONS = ["adobo", "envuelto", "vapor", "despacho"] as const;
 export const SECTION_KEYS = ["comoApartar", "menu", "sazon", "reuniones", "avisos", "resenas", "visitanos"] as const;
+/** Anchor id used in the page for each section key. */
+export const SECTION_ANCHORS: Record<(typeof SECTION_KEYS)[number], string> = {
+  comoApartar: "como-apartar",
+  menu: "menu",
+  sazon: "sazon",
+  reuniones: "reuniones",
+  avisos: "avisos",
+  resenas: "resenas",
+  visitanos: "visitanos",
+};
 
 const dayEntry = z
   .strictObject({
@@ -74,6 +84,20 @@ const dayEntry = z
     if (!d.cerrado) {
       if (!d.abre) ctx.addIssue({ code: "custom", path: ["abre"], message: "Un día abierto necesita hora de apertura" });
       if (!d.cierra) ctx.addIssue({ code: "custom", path: ["cierra"], message: "Un día abierto necesita hora de cierre" });
+      if (d.abre && d.cierra && d.cierra <= d.abre) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["cierra"],
+          message: `La hora de cierre (${d.cierra}) debe ser posterior a la de apertura (${d.abre})`,
+        });
+      }
+    } else {
+      if (d.abre !== undefined) {
+        ctx.addIssue({ code: "custom", path: ["abre"], message: "Un día cerrado no debe tener hora de apertura" });
+      }
+      if (d.cierra !== undefined) {
+        ctx.addIssue({ code: "custom", path: ["cierra"], message: "Un día cerrado no debe tener hora de cierre" });
+      }
     }
   });
 
@@ -130,6 +154,8 @@ const baseSchema = z.strictObject({
   seo: z.strictObject({
     url: pendingOf(z.url()),
     titulo: text,
+    tituloProvisional: text,
+    nombreCortoProvisional: text,
     descripcion: text,
     imagenSocial: z.strictObject({
       archivo: text,
@@ -255,6 +281,7 @@ const baseSchema = z.strictObject({
     navegacionPrincipal: text,
     datoPendiente: text,
     numeroPendiente: text,
+    direccionPendiente: text,
     precioPendiente: text,
     textoPendiente: text,
     fotoPendiente: text,
@@ -323,6 +350,33 @@ function isPublishable(key: string, data: Base): boolean {
   return true;
 }
 
+/** Hosts accepted for a confirmed Google Maps link. */
+function isGoogleMapsUrl(raw: string): boolean {
+  let u: URL;
+  try {
+    u = new URL(raw);
+  } catch {
+    return false;
+  }
+  const host = u.hostname.toLowerCase();
+  const path = u.pathname;
+  if (host === "google.com" || host === "www.google.com") return path.startsWith("/maps");
+  if (host === "maps.google.com") return true;
+  if (host === "maps.app.goo.gl") return true;
+  if (host === "goo.gl") return path.startsWith("/maps");
+  return false;
+}
+
+function findDuplicates(values: string[]): number[] {
+  const seen = new Set<string>();
+  const dup: number[] = [];
+  values.forEach((v, i) => {
+    if (seen.has(v)) dup.push(i);
+    seen.add(v);
+  });
+  return dup;
+}
+
 export const siteSchema = baseSchema.superRefine((data, ctx) => {
   checkTemplate(data.seo?.titulo ?? "", TEMPLATE_TOKENS["seo.titulo"], ["seo", "titulo"], ctx);
   checkTemplate(data.aviso?.plantilla ?? "", TEMPLATE_TOKENS["aviso.plantilla"], ["aviso", "plantilla"], ctx);
@@ -341,6 +395,63 @@ export const siteSchema = baseSchema.superRefine((data, ctx) => {
     if (typeof ref.key === "string" && !(data.imagenes && ref.key in data.imagenes)) {
       ctx.addIssue({ code: "custom", path: ref.path, message: `La imagen «${ref.key}» no existe en imagenes` });
     }
+  }
+
+  // Navigation anchors must point at a known section (all states); in produccion that section must be enabled.
+  const anchorToKey = new Map(Object.entries(SECTION_ANCHORS).map(([k, id]) => [`#${id}`, k as SectionKey]));
+  (data.navegacion ?? []).forEach((item, i) => {
+    const key = anchorToKey.get(item.ancla);
+    if (!key) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["navegacion", i, "ancla"],
+        message: `El ancla «${item.ancla}» no corresponde a ninguna sección. Opciones: ${[...anchorToKey.keys()].join(", ")}`,
+      });
+    } else if (data.estado === "produccion" && data.secciones?.[key] !== true) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["navegacion", i, "ancla"],
+        message: `El enlace «${item.ancla}» apunta a una sección desactivada (secciones.${key} es false)`,
+      });
+    }
+  });
+
+  // Unique ids and presentation types (all states).
+  const products = data.menu?.productos ?? [];
+  for (const i of findDuplicates(products.map((p) => p.id))) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["menu", "productos", i, "id"],
+      message: `El id de producto «${products[i]?.id}» está repetido`,
+    });
+  }
+  products.forEach((p, i) => {
+    for (const j of findDuplicates(p.presentaciones.map((x) => x.tipo))) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["menu", "productos", i, "presentaciones", j, "tipo"],
+        message: `La presentación «${p.presentaciones[j]?.tipo}» está repetida en este producto`,
+      });
+    }
+  });
+  const options = data.reuniones?.opciones ?? [];
+  for (const j of findDuplicates(options.map((o) => o.tipo))) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["reuniones", "opciones", j, "tipo"],
+      message: `La opción «${options[j]?.tipo}» está repetida en reuniones`,
+    });
+  }
+
+  // A confirmed Maps link must be a Google Maps URL (all states).
+  const mapsUrl = data.ubicacion?.mapsUrl;
+  if (typeof mapsUrl === "string" && !isGoogleMapsUrl(mapsUrl)) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["ubicacion", "mapsUrl"],
+      message:
+        "Debe ser un enlace de Google Maps (google.com/maps, maps.google.com, maps.app.goo.gl o goo.gl/maps)",
+    });
   }
 
   if (data.estado !== "produccion") return;

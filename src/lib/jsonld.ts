@@ -66,7 +66,7 @@ export function buildRestaurantJsonLd(site: SiteData): Record<string, unknown> |
   }
 
   if (site.negocio.cocina) ld.servesCuisine = site.negocio.cocina;
-  if (base) ld.hasMenu = `${base}/#menu`;
+  if (base && site.secciones.menu) ld.hasMenu = `${base}/#menu`;
 
   const sameAs = site.contacto.redes.map((r) => confirmed(r.url)).filter((u): u is string => Boolean(u));
   if (sameAs.length > 0) ld.sameAs = sameAs;

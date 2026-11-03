@@ -10,11 +10,14 @@
  */
 import "../styles/global.css";
 import { site } from "../data/site";
-import { resolve, fillTemplate } from "../lib/pending";
+import { confirmed, fillTemplate } from "../lib/pending";
 import { buildRestaurantJsonLd } from "../lib/jsonld";
 
-const name = resolve(site.negocio.nombre).value ?? "";
-const title = fillTemplate(site.seo.titulo, { nombre: name });
+// Never present the unconfirmed candidate name as if it were the real one: fall back to the provisional title.
+const confirmedName = confirmed(site.negocio.nombre);
+const title = confirmedName
+  ? fillTemplate(site.seo.titulo, { nombre: confirmedName })
+  : site.seo.tituloProvisional;
 const canonical = new URL("/", Astro.site).href;
 const og = site.seo.imagenSocial;
 const ogImage = new URL(og.archivo, Astro.site).href;
@@ -32,7 +35,7 @@ const jsonLd = buildRestaurantJsonLd(site);
     <meta name="theme-color" content={site.seo.colorTema} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_MX" />
-    <meta property="og:site_name" content={name} />
+    {confirmedName && <meta property="og:site_name" content={confirmedName} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={site.seo.descripcion} />
     <meta property="og:url" content={canonical} />

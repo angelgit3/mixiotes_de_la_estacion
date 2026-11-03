@@ -19,6 +19,8 @@
       "nota": "Dominio definitivo del sitio (por ejemplo, el que se compre o el de Cloudflare Pages)."
     },
     "titulo": "{nombre} · Mixiotes para llevar en Tulancingo",
+    "tituloProvisional": "Mixiotes para llevar en Tulancingo",
+    "nombreCortoProvisional": "Mixiotes",
     "descripcion": "Mixiotes 100% para llevar en Tulancingo de Bravo, Hidalgo. Aparta por WhatsApp y recoge sin hacer fila. Por pieza, por orden y, para reuniones, por docena o por kilo.",
     "imagenSocial": {
       "archivo": "/og.png",
@@ -307,6 +309,7 @@
     "navegacionPrincipal": "Navegación principal",
     "datoPendiente": "Dato pendiente",
     "numeroPendiente": "Número pendiente",
+    "direccionPendiente": "Dirección pendiente",
     "precioPendiente": "Pendiente",
     "textoPendiente": "Pendiente",
     "fotoPendiente": "Foto pendiente",

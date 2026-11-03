@@ -114,7 +114,8 @@
   --textura: url("/textura-papel.webp");
 }
 
-@utility bg-textura {
+/* Named without a `bg-` prefix on purpose: tailwind-merge treats `bg-*` as a background-color class and would drop `bg-papel-oscuro`. */
+@utility textura-papel {
   background-image: var(--textura);
 }
 
@@ -127,6 +128,14 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    /* Keep focused elements and anchor targets clear of the fixed mobile bar (WCAG 2.4.11). */
+    scroll-padding-top: 1rem;
+    scroll-padding-bottom: calc(6.5rem + env(safe-area-inset-bottom));
+  }
+  @media (min-width: 64rem) {
+    html {
+      scroll-padding-bottom: 0;
+    }
   }
   body {
     background-color: var(--color-background);

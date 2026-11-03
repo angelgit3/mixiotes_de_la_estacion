@@ -129,6 +129,7 @@ describe("parseSite", () => {
     const raw2 = loadFixture();
     raw2.imagenes.plato.placeholder = true;
     raw2.secciones.menu = false;
+    raw2.navegacion = raw2.navegacion.filter((n: { ancla: string }) => n.ancla !== "#menu");
     expect(parseSite(raw2).estado).toBe("produccion");
   });
 
@@ -176,6 +177,109 @@ describe("parseSite", () => {
     const raw = loadSitio();
     raw.heroe.imagen = "nope";
     expect(messageOf(raw)).toContain("heroe.imagen — La imagen «nope» no existe");
+  });
+
+  describe("navegacion anchors", () => {
+    it("accepts the anchors of enabled sections", () => {
+      expect(parseSite(loadFixture()).navegacion.length).toBeGreaterThan(0);
+    });
+
+    it("rejects an anchor that is not a known section, even in borrador", () => {
+      const raw = loadSitio();
+      raw.navegacion[0].ancla = "#no-existe";
+      expect(messageOf(raw)).toContain("navegacion[0].ancla — El ancla «#no-existe» no corresponde a ninguna sección");
+    });
+
+    it("rejects an anchor to a disabled section in produccion, but allows it in borrador", () => {
+      const raw = loadFixture();
+      raw.navegacion.push({ texto: "Reseñas", ancla: "#resenas" });
+      expect(messageOf(raw)).toContain("apunta a una sección desactivada");
+      raw.estado = "borrador";
+      expect(() => parseSite(raw)).not.toThrow();
+    });
+  });
+
+  describe("unique ids and types", () => {
+    it("rejects duplicate product ids", () => {
+      const raw = loadFixture();
+      raw.menu.productos[1].id = raw.menu.productos[0].id;
+      expect(messageOf(raw)).toContain("menu.productos[1].id — El id de producto");
+    });
+
+    it("rejects a repeated presentation within a product", () => {
+      const raw = loadFixture();
+      const first = raw.menu.productos[0].presentaciones[0];
+      raw.menu.productos[0].presentaciones.push({ ...first });
+      expect(messageOf(raw)).toContain("está repetida en este producto");
+    });
+
+    it("rejects a repeated reuniones option", () => {
+      const raw = loadFixture();
+      raw.reuniones.opciones.push({ ...raw.reuniones.opciones[0] });
+      expect(messageOf(raw)).toContain("está repetida en reuniones");
+    });
+
+    it("allows the same presentation type in different products", () => {
+      expect(() => parseSite(loadFixture())).not.toThrow();
+    });
+  });
+
+  describe("horario consistency", () => {
+    it("rejects closing at or before opening", () => {
+      const raw = loadFixture();
+      raw.horario.semana[1] = { dia: "martes", abre: "15:00", cierra: "08:00" };
+      expect(messageOf(raw)).toContain("horario.semana[1].cierra — La hora de cierre (08:00) debe ser posterior");
+      raw.horario.semana[1] = { dia: "martes", abre: "08:00", cierra: "08:00" };
+      expect(messageOf(raw)).toContain("debe ser posterior");
+    });
+
+    it("rejects a closed day that still has hours", () => {
+      const raw = loadFixture();
+      raw.horario.semana[0] = { dia: "lunes", cerrado: true, abre: "08:00", cierra: "15:00" };
+      const msg = messageOf(raw);
+      expect(msg).toContain("horario.semana[0].abre — Un día cerrado no debe tener hora de apertura");
+      expect(msg).toContain("horario.semana[0].cierra — Un día cerrado no debe tener hora de cierre");
+    });
+
+    it("accepts a closed day without hours and a valid open day", () => {
+      const raw = loadFixture();
+      raw.horario.semana[0] = { dia: "lunes", cerrado: true };
+      raw.horario.semana[1] = { dia: "martes", abre: "08:00", cierra: "15:30" };
+      expect(() => parseSite(raw)).not.toThrow();
+    });
+  });
+
+  describe("ubicacion.mapsUrl host", () => {
+    const ok = [
+      "https://www.google.com/maps/place/Tulancingo",
+      "https://google.com/maps?q=x",
+      "https://maps.google.com/?q=x",
+      "https://maps.app.goo.gl/abc123",
+      "https://goo.gl/maps/abc123",
+    ];
+    for (const url of ok) {
+      it(`accepts ${url}`, () => {
+        const raw = loadFixture();
+        raw.ubicacion.mapsUrl = url;
+        expect(() => parseSite(raw)).not.toThrow();
+      });
+    }
+
+    const bad = ["https://example.com/maps/x", "https://www.google.com/search?q=x", "https://goo.gl/abc", "https://evil.test/https://maps.google.com"];
+    for (const url of bad) {
+      it(`rejects ${url}`, () => {
+        const raw = loadFixture();
+        raw.ubicacion.mapsUrl = url;
+        expect(messageOf(raw)).toContain("ubicacion.mapsUrl — Debe ser un enlace de Google Maps");
+      });
+    }
+
+    it("does not check a pending mapsUrl", () => {
+      const raw = loadFixture();
+      raw.estado = "borrador";
+      raw.ubicacion.mapsUrl = { pendiente: true, nota: "falta" };
+      expect(() => parseSite(raw)).not.toThrow();
+    });
   });
 
   it("isPending distinguishes markers from values", () => {

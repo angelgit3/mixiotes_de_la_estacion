@@ -39,7 +39,7 @@ describe("links", () => {
   });
 
   it("uses the confirmed mapsUrl", () => {
-    expect(mapsHref(parseSite(loadFixture()))).toBe("https://maps.example.com/prueba");
+    expect(mapsHref(parseSite(loadFixture()))).toBe("https://maps.app.goo.gl/prueba");
   });
 
   it("skips missing parts", () => {
@@ -86,6 +86,14 @@ describe("jsonld", () => {
       closes: "15:00",
     });
     expect(ld).not.toHaveProperty("priceRange");
+  });
+
+  it("emits hasMenu only when the menu section is enabled", () => {
+    const raw = loadFixture();
+    expect(buildRestaurantJsonLd(parseSite(raw))).toHaveProperty("hasMenu");
+    raw.secciones.menu = false;
+    raw.navegacion = raw.navegacion.filter((n: { ancla: string }) => n.ancla !== "#menu");
+    expect(buildRestaurantJsonLd(parseSite(raw))).not.toHaveProperty("hasMenu");
   });
 
   it("returns null while the name is pending", () => {
