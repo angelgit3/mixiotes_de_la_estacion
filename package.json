@@ -10,7 +10,8 @@
     "check": "astro check",
     "test": "vitest run",
     "screenshots": "node scripts/screenshots.mjs",
-    "verify": "npm run check && npm run test && npm run build"
+    "verify": "npm run check && npm run test && npm run build",
+    "lighthouse": "bash scripts/lighthouse.sh"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
