@@ -24,7 +24,8 @@ const draft = site.estado === "borrador";
 const h = "text-sm font-bold uppercase tracking-[0.18em] text-maiz";
 ---
 
-<footer class="border-t-4 border-adobo bg-tinta py-14 text-papel [--focus:var(--color-maiz)]">
+<!-- Mobile: extra bottom padding inside the footer leaves room for the fixed MobileBar. -->
+<footer class="border-t-4 border-adobo bg-tinta pt-14 pb-[calc(8.25rem+env(safe-area-inset-bottom))] text-papel lg:pb-14 [--focus:var(--color-maiz)]">
   <Container class="grid gap-10 md:grid-cols-2 lg:grid-cols-12 lg:gap-12">
     <div class="lg:col-span-3">
       <p class="font-display text-4xl uppercase leading-[1.1] tracking-wide">

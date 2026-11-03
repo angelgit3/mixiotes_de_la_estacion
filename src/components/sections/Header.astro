@@ -12,11 +12,15 @@ import { site } from "../../data/site";
 import Container from "../ui/Container.astro";
 import Wordmark from "../ui/Wordmark.astro";
 import WhatsAppButton from "../ui/WhatsAppButton.astro";
+import { resolve } from "../../lib/pending";
+
+// The accessible name must contain the visible wordmark text (WCAG 2.5.3).
+const homeLabel = [resolve(site.negocio.nombre).value, site.ui.inicio].filter(Boolean).join(" · ");
 ---
 
 <header class="border-b-4 border-tinta bg-papel bg-textura">
   <Container class="flex flex-wrap items-center justify-between gap-x-6 py-3 lg:flex-nowrap">
-    <a href="#inicio" aria-label={site.ui.inicio} class="rounded-sm">
+    <a href="#inicio" aria-label={homeLabel} class="rounded-sm">
       <Wordmark />
     </a>
     <nav aria-label={site.ui.navegacionPrincipal} class="order-last w-full lg:order-none lg:w-auto lg:min-w-0 lg:flex-1">
@@ -26,7 +30,7 @@ import WhatsAppButton from "../ui/WhatsAppButton.astro";
             <li>
               <a
                 href={item.ancla}
-                class="flex min-h-12 items-center justify-center px-1 text-center text-[0.8125rem] font-bold uppercase leading-tight tracking-wide text-tinta underline-offset-4 hover:text-adobo hover:underline hover:decoration-2 max-[399px]:text-xs max-[399px]:tracking-normal min-[400px]:text-sm sm:text-base lg:inline-flex lg:px-2"
+                class="flex min-h-12 items-center justify-center px-1 text-center text-[0.8125rem] font-bold uppercase leading-tight tracking-wide text-tinta underline-offset-4 hover:text-adobo hover:underline hover:decoration-2 max-[399px]:text-xs max-[399px]:tracking-normal min-[400px]:text-sm sm:text-base lg:inline-flex lg:px-2 xl:whitespace-nowrap"
               >
                 {item.texto}
               </a>
