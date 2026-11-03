@@ -109,8 +109,9 @@
 :root {
   /* Focus ring color; dark surfaces override it (see Section tone="nopal"). */
   --focus: var(--color-tinta);
-  /* Light paper grain: one small tiled SVG, painted once. */
-  --textura: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .1 0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Light paper grain: a tiny pre-rendered raster tile (an SVG feTurbulence
+     filter here cost ~200 ms of main-thread paint on throttled mobile). */
+  --textura: url("/textura-papel.webp");
 }
 
 @utility bg-textura {
@@ -134,13 +135,6 @@
     font-family: var(--font-sans);
     font-size: 1.0625rem;
     line-height: 1.55;
-    /* Room for the fixed mobile bar so the footer is never covered. */
-    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
-  }
-  @media (min-width: 64rem) {
-    body {
-      padding-bottom: 0;
-    }
   }
   :focus-visible {
     outline: 3px solid var(--focus);
