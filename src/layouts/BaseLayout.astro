@@ -1,0 +1,72 @@
+---
+/**
+ * BaseLayout — html shell, SEO head (title, description, canonical, Open Graph, Twitter, icons, JSON-LD),
+ * skip link and the slot for the page body.
+ *
+ * Props: none (all copy comes from sitio.json).
+ * Slots: default (page content: header, main, footer…).
+ * Usage: <BaseLayout><main id="contenido">…</main></BaseLayout>
+ * Depends on: src/styles/global.css, src/data/site.ts, src/lib/pending.ts, src/lib/jsonld.ts
+ */
+import "../styles/global.css";
+import { site } from "../data/site";
+import { confirmed, fillTemplate } from "../lib/pending";
+import { buildRestaurantJsonLd } from "../lib/jsonld";
+
+// Never present the unconfirmed candidate name as if it were the real one: fall back to the provisional title.
+const confirmedName = confirmed(site.negocio.nombre);
+const title = confirmedName
+  ? fillTemplate(site.seo.titulo, { nombre: confirmedName })
+  : site.seo.tituloProvisional;
+const canonical = new URL("/", Astro.site).href;
+const og = site.seo.imagenSocial;
+const ogImage = new URL(og.archivo, Astro.site).href;
+const jsonLd = buildRestaurantJsonLd(site);
+---
+
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={site.seo.descripcion} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content={site.seo.colorTema} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    {confirmedName && <meta property="og:site_name" content={confirmedName} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={site.seo.descripcion} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content={String(og.ancho)} />
+    <meta property="og:image:height" content={String(og.alto)} />
+    <meta property="og:image:alt" content={og.alt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={site.seo.descripcion} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={og.alt} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preload" href="/fonts/anton-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+    {
+      jsonLd && (
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, "\\u003c")} />
+      )
+    }
+  </head>
+  <body>
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:inline-flex focus:min-h-12 focus:items-center focus:rounded-brand focus:bg-tinta focus:px-5 focus:font-bold focus:text-papel focus:[outline-color:var(--color-maiz)]"
+    >
+      {site.ui.saltarContenido}
+    </a>
+    <slot />
+  </body>
+</html>

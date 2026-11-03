@@ -1,0 +1,44 @@
+---
+/**
+ * NoticeBar — top announcement strip for today's opening ("Hoy: abrimos … · Aparta por WhatsApp").
+ * Rendered only when site.aviso.activo. Template tokens are replaced by Value components (with chips).
+ *
+ * Props: none.
+ * Slots: none.
+ * Usage: <NoticeBar />
+ * Depends on: Value, WhatsAppButton, src/data/site.ts
+ */
+import { site } from "../../data/site";
+import Value from "../ui/Value.astro";
+import WhatsAppButton from "../ui/WhatsAppButton.astro";
+
+const { aviso } = site;
+const parts = aviso.plantilla
+  .split(/(\{[^{}]*\})/)
+  .filter((p) => p !== "")
+  .map((p) => {
+    const token = /^\{([^{}]*)\}$/.exec(p)?.[1];
+    if (token === "apertura") return { kind: "value" as const, value: aviso.apertura };
+    if (token === "cierre") return { kind: "value" as const, value: aviso.cierre };
+    return { kind: "text" as const, text: p };
+  });
+---
+
+{
+  aviso.activo && (
+    <aside aria-label={aviso.etiqueta} class="border-b-4 border-tinta bg-maiz text-tinta">
+      <div class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-0 px-4 py-0.5 text-center text-sm sm:px-6 sm:text-base lg:px-8">
+        <p class="py-2">
+          <strong class="mr-1 inline-block -rotate-2 rounded-sm bg-tinta px-2 py-0.5 text-xs font-bold uppercase tracking-widest text-maiz sm:text-sm">
+            {aviso.etiqueta}
+          </strong>
+          {parts.map((p) => (p.kind === "text" ? <span class="font-semibold">{p.text}</span> : <Value value={p.value} class="font-semibold" />))}
+        </p>
+        <span aria-hidden="true" class="hidden sm:inline">·</span>
+        <WhatsAppButton message="apartar" variant="link">
+          {aviso.cta}
+        </WhatsAppButton>
+      </div>
+    </aside>
+  )
+}

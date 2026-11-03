@@ -1,0 +1,51 @@
+---
+/**
+ * Header — wordmark, short in-page navigation and the pennant-shaped WhatsApp CTA (desktop only).
+ * On mobile the nav is a compact wrapping row (no JS menu) and the CTA lives in MobileBar.
+ *
+ * Props: none.
+ * Slots: none.
+ * Usage: <Header />
+ * Depends on: Container, Wordmark, WhatsAppButton, src/data/site.ts
+ */
+import { site } from "../../data/site";
+import Container from "../ui/Container.astro";
+import Wordmark from "../ui/Wordmark.astro";
+import WhatsAppButton from "../ui/WhatsAppButton.astro";
+import Pending from "../ui/Pending.astro";
+import { resolve } from "../../lib/pending";
+
+// The accessible name must contain the visible wordmark text (WCAG 2.5.3).
+const name = resolve(site.negocio.nombre);
+const homeLabel = [name.value, site.ui.inicio].filter(Boolean).join(" · ");
+---
+
+<header class="border-b-4 border-tinta bg-papel textura-papel">
+  <Container class="flex flex-wrap items-center justify-between gap-x-6 py-3 lg:flex-nowrap">
+    <div class="flex min-w-0 items-center lg:flex-col lg:items-start lg:gap-1">
+      <a href="#inicio" aria-label={homeLabel} class="rounded-sm">
+        <Wordmark />
+      </a>
+      {name.pending && <Pending note={name.note} class="ml-2 shrink-0 lg:ml-0" />}
+    </div>
+    <nav aria-label={site.ui.navegacionPrincipal} class="order-last w-full lg:order-none lg:w-auto lg:min-w-0 lg:flex-1">
+      <ul class="grid grid-cols-4 gap-x-1 lg:flex lg:justify-center lg:gap-x-2 xl:gap-x-6">
+        {
+          site.navegacion.map((item) => (
+            <li>
+              <a
+                href={item.ancla}
+                class="flex min-h-12 items-center justify-center px-1 text-center text-[0.8125rem] font-bold uppercase leading-tight tracking-wide text-tinta underline-offset-4 hover:text-adobo hover:underline hover:decoration-2 max-[399px]:text-xs max-[399px]:tracking-normal min-[400px]:text-sm sm:text-base lg:inline-flex lg:px-2 xl:whitespace-nowrap"
+              >
+                {item.texto}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="hidden lg:block">
+      <WhatsAppButton message="apartar" variant="pennant">{site.heroe.ctaPrincipal}</WhatsAppButton>
+    </div>
+  </Container>
+</header>

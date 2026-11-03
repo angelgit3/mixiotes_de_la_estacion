@@ -1,0 +1,344 @@
+{
+  "estado": "borrador",
+  "negocio": {
+    "nombre": {
+      "pendiente": true,
+      "nota": "Confirmar el nombre comercial exacto (mayúsculas y acentos) tal como va en el letrero.",
+      "porConfirmar": "Mixiotes De La Estación"
+    },
+    "modalidad": "100% para llevar",
+    "ciudad": "Tulancingo de Bravo",
+    "region": "Hidalgo",
+    "regionCorta": "Hgo.",
+    "pais": "MX",
+    "cocina": "Mexican"
+  },
+  "seo": {
+    "url": {
+      "pendiente": true,
+      "nota": "Dominio definitivo del sitio (por ejemplo, el que se compre o el de Cloudflare Pages)."
+    },
+    "titulo": "{nombre} · Mixiotes para llevar en Tulancingo",
+    "tituloProvisional": "Mixiotes para llevar en Tulancingo",
+    "nombreCortoProvisional": "Mixiotes",
+    "descripcion": "Mixiotes 100% para llevar en Tulancingo de Bravo, Hidalgo. Aparta por WhatsApp y recoge sin hacer fila. Por pieza, por orden y, para reuniones, por docena o por kilo.",
+    "imagenSocial": {
+      "archivo": "/og.png",
+      "ancho": 1200,
+      "alto": 630,
+      "alt": "Imagen provisional para redes: ilustración de una vaporera con mixiotes y el texto Mixiotes para llevar en Tulancingo.",
+      "placeholder": true
+    },
+    "colorTema": "#9E2B1D"
+  },
+  "contacto": {
+    "whatsapp": {
+      "pendiente": true,
+      "nota": "Número de WhatsApp (10 dígitos) que recibirá los apartados. No se sabe si es el mismo teléfono registrado en Google."
+    },
+    "telefono": {
+      "pendiente": true,
+      "nota": "Confirmar que el teléfono registrado en Google es correcto y que contestan llamadas ahí.",
+      "porConfirmar": "775 755 3530"
+    },
+    "redes": [
+      {
+        "red": "Facebook",
+        "url": {
+          "pendiente": true,
+          "nota": "Dirección (URL) de la página de Facebook del negocio, si existe."
+        }
+      }
+    ]
+  },
+  "whatsapp": {
+    "apartar": "Hola, quiero apartar __ mixiotes de __ para recoger hoy a las __. ¿Todavía tienen?",
+    "eventos": "Hola, quiero cotizar mixiotes para un evento: __ personas, el día __."
+  },
+  "ubicacion": {
+    "calle": {
+      "pendiente": true,
+      "nota": "Calle y número según la ficha de Google. Confirmar con el dueño.",
+      "porConfirmar": "Calle Rodolfo Guzmán Huerta (El Santo) #13"
+    },
+    "colonia": {
+      "pendiente": true,
+      "nota": "Colonia o referencia de zona según la ficha de Google. Confirmar con el dueño.",
+      "porConfirmar": "Col. Álamos, Zona de la Estación"
+    },
+    "codigoPostal": {
+      "pendiente": true,
+      "nota": "Código postal de la dirección."
+    },
+    "mapsUrl": {
+      "pendiente": true,
+      "nota": "Enlace de Compartir de la ficha de Google Maps. Mientras falte, el botón Cómo llegar busca la dirección en Google Maps."
+    },
+    "geo": {
+      "pendiente": true,
+      "nota": "Coordenadas (latitud y longitud) del local, tomadas de la ficha de Google Maps."
+    }
+  },
+  "horario": {
+    "semana": {
+      "pendiente": true,
+      "nota": "Horario de cada día de la semana y qué días se descansa. Posiblemente abre temprano y vende hasta agotar."
+    }
+  },
+  "aviso": {
+    "activo": true,
+    "etiqueta": "Hoy",
+    "plantilla": "abrimos {apertura} · {cierre}",
+    "apertura": {
+      "pendiente": true,
+      "nota": "Hora a la que se abre hoy (este aviso se edita cuando cambia)."
+    },
+    "cierre": {
+      "pendiente": true,
+      "nota": "Confirmar si se vende hasta agotar.",
+      "porConfirmar": "hasta agotar"
+    },
+    "cta": "Aparta por WhatsApp"
+  },
+  "navegacion": [
+    { "texto": "Cómo apartar", "ancla": "#como-apartar" },
+    { "texto": "Menú", "ancla": "#menu" },
+    { "texto": "Reuniones", "ancla": "#reuniones" },
+    { "texto": "Visítanos", "ancla": "#visitanos" }
+  ],
+  "secciones": {
+    "comoApartar": true,
+    "menu": true,
+    "sazon": false,
+    "reuniones": true,
+    "avisos": true,
+    "resenas": false,
+    "visitanos": true
+  },
+  "heroe": {
+    "antetitulo": "Mixiotes para llevar · Tulancingo, Hgo.",
+    "titulo": "Puro sazón, envuelto y listo para llevar",
+    "descripcion": "Escríbenos por WhatsApp qué quieres y a qué hora pasas. Te lo apartamos y lo recoges sin hacer fila.",
+    "acento": "¡Aparta los tuyos!",
+    "ctaPrincipal": "Aparta por WhatsApp",
+    "ctaSecundario": "Cómo llegar",
+    "nota": "Solo para llevar · No tenemos comedor",
+    "imagen": "vaporera"
+  },
+  "comoApartar": {
+    "titulo": "Aparta en 3 pasos",
+    "intro": "Así no te quedas sin mixiotes y no haces fila.",
+    "pasos": [
+      {
+        "titulo": "Escríbenos",
+        "texto": "Mándanos un WhatsApp con qué quieres y a qué hora pasas."
+      },
+      {
+        "titulo": "Te confirmamos",
+        "texto": "Te respondemos si hay disponibilidad para tu pedido."
+      },
+      {
+        "titulo": "Recoges sin fila",
+        "texto": "Llegas a la hora acordada y te llevas tu pedido."
+      }
+    ],
+    "cta": "Aparta por WhatsApp",
+    "imagen": "mostrador"
+  },
+  "menu": {
+    "titulo": "Menú",
+    "intro": "Todo es para llevar. Pide por pieza o por orden.",
+    "etiquetaIncluye": "Incluye",
+    "productos": [
+      {
+        "id": "carnero",
+        "nombre": {
+          "pendiente": true,
+          "nota": "Confirmar si se vende mixiote de carnero o de borrego y cómo se llama en el menú.",
+          "porConfirmar": "Mixiote de carnero"
+        },
+        "presentaciones": [
+          {
+            "tipo": "pieza",
+            "precio": { "pendiente": true, "nota": "Precio por pieza de mixiote de carnero." }
+          },
+          {
+            "tipo": "orden",
+            "precio": { "pendiente": true, "nota": "Precio por orden de mixiote de carnero y cuántas piezas trae." }
+          }
+        ],
+        "incluye": {
+          "pendiente": true,
+          "nota": "Qué se entrega con el pedido. Posiblemente consomé, salsas, nopales y tortillas.",
+          "porConfirmar": ["Consomé", "Salsas", "Nopales", "Tortillas"]
+        }
+      },
+      {
+        "id": "pollo",
+        "nombre": {
+          "pendiente": true,
+          "nota": "Confirmar si se vende mixiote de pollo.",
+          "porConfirmar": "Mixiote de pollo"
+        },
+        "presentaciones": [
+          {
+            "tipo": "pieza",
+            "precio": { "pendiente": true, "nota": "Precio por pieza de mixiote de pollo." }
+          },
+          {
+            "tipo": "orden",
+            "precio": { "pendiente": true, "nota": "Precio por orden de mixiote de pollo y cuántas piezas trae." }
+          }
+        ],
+        "incluye": {
+          "pendiente": true,
+          "nota": "Qué se entrega con el pedido. Posiblemente consomé, salsas, nopales y tortillas.",
+          "porConfirmar": ["Consomé", "Salsas", "Nopales", "Tortillas"]
+        }
+      }
+    ],
+    "imagen": "plato"
+  },
+  "sazon": {
+    "titulo": "El sazón",
+    "intro": "Así se prepara cada mixiote.",
+    "pasos": [
+      {
+        "ilustracion": "adobo",
+        "titulo": { "pendiente": true, "nota": "Confirmar el paso del adobo.", "porConfirmar": "Adobo" },
+        "texto": { "pendiente": true, "nota": "Descripción del adobo en palabras del dueño (sin revelar la receta)." }
+      },
+      {
+        "ilustracion": "envuelto",
+        "titulo": { "pendiente": true, "nota": "Confirmar cómo se envuelve.", "porConfirmar": "Envuelto" },
+        "texto": { "pendiente": true, "nota": "Con qué se envuelve cada mixiote." }
+      },
+      {
+        "ilustracion": "vapor",
+        "titulo": { "pendiente": true, "nota": "Confirmar la cocción al vapor.", "porConfirmar": "Al vapor" },
+        "texto": { "pendiente": true, "nota": "Cómo se cuece (sin tiempos ni cifras que no estén confirmados)." }
+      },
+      {
+        "ilustracion": "despacho",
+        "titulo": { "pendiente": true, "nota": "Confirmar cómo se despacha.", "porConfirmar": "Despacho" },
+        "texto": { "pendiente": true, "nota": "Cómo se empaca para llevar." }
+      }
+    ]
+  },
+  "reuniones": {
+    "titulo": "Pedidos para reuniones",
+    "texto": "¿Cumpleaños, bautizo o convivio? Encarga tus mixiotes por docena o por kilo y agenda tu pedido con días de anticipación.",
+    "opciones": [
+      {
+        "tipo": "docena",
+        "precio": { "pendiente": true, "nota": "Precio por docena para eventos." }
+      },
+      {
+        "tipo": "kilo",
+        "precio": { "pendiente": true, "nota": "Precio por kilo para eventos." }
+      }
+    ],
+    "anticipacion": {
+      "pendiente": true,
+      "nota": "Con cuántos días de anticipación hay que encargar un pedido para evento."
+    },
+    "etiquetaAnticipacion": "Anticipación",
+    "cta": "Cotiza por WhatsApp",
+    "imagen": "empaque"
+  },
+  "avisos": {
+    "titulo": "Avisos y horarios especiales",
+    "intro": "Aquí avisamos los días que cerramos y los cambios de horario. Revisa antes de venir.",
+    "vacio": "Por ahora no hay avisos publicados.",
+    "lista": []
+  },
+  "resenas": {
+    "titulo": "Lo que dicen",
+    "intro": "Reseñas de clientes en Google.",
+    "lista": []
+  },
+  "visitanos": {
+    "titulo": "Visítanos",
+    "soloLlevar": "Solo para llevar: no tenemos comedor.",
+    "etiquetaDireccion": "Dirección",
+    "etiquetaHorario": "Horario",
+    "etiquetaTelefono": "Teléfono",
+    "cta": "Cómo llegar",
+    "imagen": "fachada"
+  },
+  "pie": {
+    "etiquetaContacto": "Contacto",
+    "etiquetaRedes": "Redes",
+    "privacidadTitulo": "Aviso de privacidad",
+    "privacidad": "Este sitio no usa cookies, no tiene formularios y no guarda datos personales. Si nos escribes por WhatsApp o nos llamas, esos mensajes se rigen por las políticas de cada servicio."
+  },
+  "imagenes": {
+    "vaporera": {
+      "archivo": "vaporera.png",
+      "alt": "Ilustración provisional de una vaporera con vapor. Aquí irá la foto de la vaporera abierta con los mixiotes humeando.",
+      "placeholder": true,
+      "toma": "Vaporera abierta con los mixiotes humeando"
+    },
+    "mostrador": {
+      "archivo": "mostrador.png",
+      "alt": "Ilustración provisional de un mostrador. Aquí irá la foto del mostrador donde se despacha.",
+      "placeholder": true,
+      "toma": "Mostrador donde se despacha"
+    },
+    "plato": {
+      "archivo": "plato.png",
+      "alt": "Ilustración provisional de un plato. Aquí irá la foto de un mixiote abierto servido con nopales, salsa y tortillas.",
+      "placeholder": true,
+      "toma": "Mixiote abierto en plato con nopales, salsa y tortillas"
+    },
+    "empaque": {
+      "archivo": "empaque.png",
+      "alt": "Ilustración provisional de una bolsa para llevar. Aquí irá la foto del empaque listo para entregar.",
+      "placeholder": true,
+      "toma": "Empaque para llevar listo para entregar"
+    },
+    "fachada": {
+      "archivo": "fachada.png",
+      "alt": "Ilustración provisional de una fachada con letrero. Aquí irá la foto de la fachada desde la banqueta.",
+      "placeholder": true,
+      "toma": "Fachada con el letrero, desde la banqueta"
+    }
+  },
+  "ui": {
+    "saltarContenido": "Saltar al contenido",
+    "navegacionPrincipal": "Navegación principal",
+    "datoPendiente": "Dato pendiente",
+    "numeroPendiente": "Número pendiente",
+    "direccionPendiente": "Dirección pendiente",
+    "precioPendiente": "Pendiente",
+    "textoPendiente": "Pendiente",
+    "fotoPendiente": "Foto pendiente",
+    "presentaciones": {
+      "pieza": "Pieza",
+      "orden": "Orden",
+      "docena": "Docena",
+      "kilo": "Kilo"
+    },
+    "dias": {
+      "lunes": "Lunes",
+      "martes": "Martes",
+      "miercoles": "Miércoles",
+      "jueves": "Jueves",
+      "viernes": "Viernes",
+      "sabado": "Sábado",
+      "domingo": "Domingo"
+    },
+    "cerrado": "Cerrado",
+    "abreWhatsapp": "Abre WhatsApp",
+    "abreMaps": "Abre Google Maps",
+    "inicio": "Ir al inicio",
+    "barraRapida": "Acciones rápidas",
+    "codigoPostal": "C.P.",
+    "estrellas": "{n} de 5 estrellas",
+    "tiposAviso": {
+      "cerrado": "Cerrado",
+      "horario": "Horario",
+      "general": "Aviso"
+    }
+  }
+}

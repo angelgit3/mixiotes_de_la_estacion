@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+import NoticeBar from "../components/sections/NoticeBar.astro";
+import Header from "../components/sections/Header.astro";
+import Hero from "../components/sections/Hero.astro";
+import HowToOrder from "../components/sections/HowToOrder.astro";
+import Menu from "../components/sections/Menu.astro";
+import Sazon from "../components/sections/Sazon.astro";
+import Gatherings from "../components/sections/Gatherings.astro";
+import Notices from "../components/sections/Notices.astro";
+import Reviews from "../components/sections/Reviews.astro";
+import Visit from "../components/sections/Visit.astro";
+import Footer from "../components/sections/Footer.astro";
+import MobileBar from "../components/sections/MobileBar.astro";
+
+const { secciones } = site;
+---
+
+<BaseLayout>
+  <NoticeBar />
+  <Header />
+  <main id="contenido">
+    <Hero />
+    {secciones.comoApartar && <HowToOrder />}
+    {secciones.menu && <Menu />}
+    {secciones.sazon && <Sazon />}
+    {secciones.reuniones && <Gatherings />}
+    {secciones.avisos && <Notices />}
+    {secciones.resenas && <Reviews />}
+    {secciones.visitanos && <Visit />}
+  </main>
+  <Footer />
+  <MobileBar />
+</BaseLayout>

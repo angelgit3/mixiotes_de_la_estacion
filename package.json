@@ -1,0 +1,31 @@
+{
+  "name": "mixiotes-de-la-estacion",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "vitest run",
+    "screenshots": "node scripts/screenshots.mjs",
+    "verify": "npm run check && npm run test && npm run build",
+    "lighthouse": "bash scripts/lighthouse.sh"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@tailwindcss/vite": "^4.3.4",
+    "astro": "^7.4.5",
+    "sharp": "^0.35.5",
+    "tailwind-merge": "^3.7.0",
+    "tailwind-variants": "^4.0.1",
+    "tailwindcss": "^4.3.4",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.0"
+  }
+}

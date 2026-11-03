@@ -1,0 +1,83 @@
+---
+/**
+ * Footer — dark closing block: business name, contact (phone, WhatsApp CTA), social links and the
+ * privacy notice. Pending phone/social values show as plain text plus the chip.
+ *
+ * Props: none.
+ * Slots: none.
+ * Usage: <Footer />
+ * Depends on: Container, Value, Pending, WhatsAppButton, src/data/site.ts, src/lib/links.ts
+ */
+import { site } from "../../data/site";
+import { telHref } from "../../lib/links";
+import { confirmed, resolve } from "../../lib/pending";
+import Container from "../ui/Container.astro";
+import Pending from "../ui/Pending.astro";
+import Value from "../ui/Value.astro";
+import WhatsAppButton from "../ui/WhatsAppButton.astro";
+
+const { pie } = site;
+const name = resolve(site.negocio.nombre);
+const phone = resolve(site.contacto.telefono);
+const phoneLink = telHref(confirmed(site.contacto.telefono));
+const draft = site.estado === "borrador";
+const h = "text-sm font-bold uppercase tracking-[0.18em] text-maiz";
+---
+
+<!-- Mobile: extra bottom padding inside the footer leaves room for the fixed MobileBar. -->
+<footer class="border-t-4 border-adobo bg-tinta pt-14 pb-[calc(8.25rem+env(safe-area-inset-bottom))] text-papel lg:pb-14 [--focus:var(--color-maiz)]">
+  <Container class="grid gap-10 md:grid-cols-2 lg:grid-cols-12 lg:gap-12">
+    <div class="lg:col-span-3">
+      <p class="font-display text-4xl uppercase leading-[1.1] tracking-wide">
+        {name.value}
+        {draft && name.pending && <Pending tone="dark" note={name.note} />}
+      </p>
+      <p class="mt-3 text-lg text-papel-oscuro">{site.negocio.modalidad} · {site.negocio.ciudad}, {site.negocio.region}</p>
+    </div>
+    <div class="lg:col-span-4">
+      <h2 class={h}>{pie.etiquetaContacto}</h2>
+      <p class="mt-3 text-lg">
+        {
+          phoneLink ? (
+            <a href={phoneLink} class="inline-flex min-h-12 items-center font-bold underline underline-offset-4">
+              {phone.value}
+            </a>
+          ) : (
+            <Value value={site.contacto.telefono} tone="dark" />
+          )
+        }
+      </p>
+      <div class="mt-3">
+        <WhatsAppButton message="apartar" variant="maiz">{site.heroe.ctaPrincipal}</WhatsAppButton>
+      </div>
+    </div>
+    <div class="lg:col-span-2">
+      <h2 class={h}>{pie.etiquetaRedes}</h2>
+      <ul class="mt-3 space-y-1 text-lg">
+        {
+          site.contacto.redes.map((r) => {
+            const url = confirmed(r.url);
+            return (
+              <li class="flex min-h-12 items-center">
+                {url ? (
+                  <a href={url} target="_blank" rel="noopener" class="font-bold underline underline-offset-4">
+                    {r.red}
+                  </a>
+                ) : (
+                  <span>
+                    {r.red}
+                    {draft && <Pending tone="dark" note={resolve(r.url).note} />}
+                  </span>
+                )}
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+    <div class="md:col-span-2 lg:col-span-3">
+      <h2 class={h}>{pie.privacidadTitulo}</h2>
+      <p class="mt-3 text-base text-papel-oscuro text-pretty">{pie.privacidad}</p>
+    </div>
+  </Container>
+</footer>

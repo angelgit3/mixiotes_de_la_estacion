@@ -1,0 +1,70 @@
+---
+/**
+ * Menu — product cards as menu boards (name, presentations with dotted leaders, "Incluye" chips)
+ * next to a supporting dish photo. Text-first, no per-product images.
+ *
+ * Props: none.
+ * Slots: none.
+ * Usage: <Menu />
+ * Depends on: Section, SectionHeading, Value, Pending, Photo, src/data/site.ts, src/lib/format.ts
+ */
+import { site } from "../../data/site";
+import { formatPrice } from "../../lib/format";
+import { resolve } from "../../lib/pending";
+import Pending from "../ui/Pending.astro";
+import Photo from "../ui/Photo.astro";
+import Section from "../ui/Section.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+import Value from "../ui/Value.astro";
+
+const data = site.menu;
+const draft = site.estado === "borrador";
+---
+
+<Section id="menu">
+  <SectionHeading id="menu" title={data.titulo} intro={data.intro} />
+  <div class="mt-12 grid items-start gap-10 lg:grid-cols-12">
+    <div class="grid gap-8 md:grid-cols-2 lg:col-span-8">
+      {
+        data.productos.map((producto) => {
+          const incluye = resolve(producto.incluye);
+          const items = incluye.value ?? [site.ui.textoPendiente];
+          return (
+            <article class="flex flex-col rounded-brand border-[3px] border-tinta bg-papel-claro p-7 shadow-tarjeta">
+              <h3 class="font-display text-3xl uppercase leading-tight tracking-wide text-primary sm:text-4xl">
+                <Value value={producto.nombre} />
+              </h3>
+              <dl class="mt-6 space-y-3">
+                {producto.presentaciones.map((p) => (
+                  <div class="flex items-baseline gap-2 text-lg">
+                    <dt class="font-bold uppercase tracking-wide">{site.ui.presentaciones[p.tipo]}</dt>
+                    <span aria-hidden="true" class="min-w-4 flex-1 translate-y-[-0.25rem] border-b-[3px] border-dotted border-tinta-suave" />
+                    <dd class="shrink-0 text-right font-bold">
+                      <Value value={p.precio} format={(v) => formatPrice(Number(v))} fallback={site.ui.precioPendiente} />
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <div class="mt-auto pt-7">
+                <h4 class="text-sm font-bold uppercase tracking-[0.18em] text-tinta-suave">{data.etiquetaIncluye}</h4>
+                <ul class="mt-3 flex flex-wrap items-center gap-2">
+                  {items.map((item) => (
+                    <li class="rounded-full border-2 border-tinta bg-papel px-3 py-1 text-base font-semibold">{item}</li>
+                  ))}
+                  {incluye.pending && draft && (
+                    <li class="list-none">
+                      <Pending note={incluye.note} />
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+    <div class="lg:sticky lg:top-6 lg:col-span-4">
+      <Photo name={data.imagen} sizes="(min-width: 1152px) 370px, (min-width: 1024px) 32vw, (min-width: 640px) 90vw, calc(100vw - 32px)" />
+    </div>
+  </div>
+</Section>

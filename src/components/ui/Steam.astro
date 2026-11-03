@@ -1,0 +1,17 @@
+---
+/**
+ * Steam — three soft translucent plumes rising over the pot of the hero image. Decorative (aria-hidden),
+ * animates only transform and opacity, and is hidden under prefers-reduced-motion (see global.css).
+ *
+ * Props: none.
+ * Slots: none.
+ * Usage: <Photo name="vaporera"><Steam /></Photo>
+ * Depends on: .vapor styles in src/styles/global.css
+ */
+---
+
+<div aria-hidden="true" class="pointer-events-none absolute inset-0 z-[5]">
+  <span class="vapor" style="left:30%;bottom:32%;width:22%;height:26%;--vapor-deriva:-10%;"></span>
+  <span class="vapor" style="left:42%;bottom:34%;width:20%;height:28%;--vapor-deriva:6%;animation-delay:-2.2s;"></span>
+  <span class="vapor" style="left:53%;bottom:32%;width:22%;height:26%;--vapor-deriva:12%;animation-delay:-4.3s;"></span>
+</div>

@@ -1,0 +1,57 @@
+---
+/**
+ * Hero — kicker, h1, description, primary + secondary CTA, "solo para llevar" stamp and the vaporera image
+ * with CSS steam and a script accent sticker. Single column on mobile, 7/5 columns from 1024px.
+ *
+ * Props: none.
+ * Slots: none.
+ * Usage: <Hero />
+ * Depends on: Container, Photo, Steam, WhatsAppButton, MapsButton, src/data/site.ts
+ */
+import { site } from "../../data/site";
+import Container from "../ui/Container.astro";
+import MapsButton from "../ui/MapsButton.astro";
+import Photo from "../ui/Photo.astro";
+import Steam from "../ui/Steam.astro";
+import WhatsAppButton from "../ui/WhatsAppButton.astro";
+
+const { heroe } = site;
+---
+
+<section id="inicio" aria-labelledby="inicio-titulo" class="overflow-x-clip pb-14 pt-10 sm:pb-20 sm:pt-14 lg:pb-24">
+  <Container class="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+    <div class="lg:col-span-7">
+      <p class="text-sm font-bold uppercase tracking-[0.2em] text-tinta-suave sm:text-base">{heroe.antetitulo}</p>
+      <h1
+        id="inicio-titulo"
+        class="mt-4 font-display text-[clamp(2.75rem,1.2rem+7.4vw,6.25rem)] uppercase leading-[0.96] tracking-wide text-primary text-balance"
+      >
+        {heroe.titulo}
+      </h1>
+      <span aria-hidden="true" class="mt-6 block h-2 w-28 border-y-[3px] border-tinta"></span>
+      <p class="mt-6 max-w-xl text-lg text-pretty sm:text-xl">{heroe.descripcion}</p>
+      <div class="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:flex-wrap sm:items-center">
+        <WhatsAppButton message="apartar" variant="pennant" size="lg" class="min-h-14">{heroe.ctaPrincipal}</WhatsAppButton>
+        <MapsButton variant="outline" size="lg" class="min-h-14">{heroe.ctaSecundario}</MapsButton>
+      </div>
+      <p class="mt-7 inline-block -rotate-1 border-2 border-tinta px-3 py-1.5 text-sm font-bold uppercase tracking-wider">
+        {heroe.nota}
+      </p>
+    </div>
+    <div class="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
+      <Photo
+        name={heroe.imagen}
+        priority
+        widths={[360, 480, 640, 800, 1000, 1200]}
+        sizes="(min-width: 1152px) 470px, (min-width: 1024px) 40vw, (min-width: 448px) 448px, calc(100vw - 32px)"
+      >
+        <Steam />
+      </Photo>
+      <p
+        class="absolute -left-1 top-4 z-20 -rotate-6 border-[3px] border-tinta bg-maiz px-4 pb-1 pt-2 font-script text-3xl leading-none text-tinta shadow-sello sm:text-4xl lg:-left-6"
+      >
+        {heroe.acento}
+      </p>
+    </div>
+  </Container>
+</section>

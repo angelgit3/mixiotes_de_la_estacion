@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens: "Rótulo de barrio". See docs/diseno.md for the contrast table.
+ * Change colors here only; components use the tokens (and the semantic aliases below).
+ */
+@theme {
+  /* Brand palette */
+  --color-papel: #f3e9d8;
+  --color-adobo: #9e2b1d;
+  --color-maiz: #f0b83c;
+  --color-nopal: #2e5a3a;
+  --color-tinta: #1e1a16;
+
+  /* Tints and shades (added for contrast and depth) */
+  --color-papel-claro: #fbf6ea;
+  --color-papel-oscuro: #e6d8be;
+  --color-adobo-oscuro: #7e2015;
+  --color-nopal-oscuro: #224a2e;
+  --color-tinta-suave: #4a4036;
+
+  /* Semantic aliases */
+  --color-background: var(--color-papel);
+  --color-surface: var(--color-papel-claro);
+  --color-foreground: var(--color-tinta);
+  --color-muted: var(--color-tinta-suave);
+  --color-primary: var(--color-adobo);
+  --color-primary-foreground: var(--color-papel);
+  --color-accent: var(--color-maiz);
+  --color-success: var(--color-nopal);
+  --color-inverse: var(--color-tinta);
+  --color-inverse-foreground: var(--color-papel);
+  --color-border: var(--color-tinta);
+
+  /* Typography */
+  --font-display: "Anton", "Anton Fallback", Impact, sans-serif;
+  --font-script: "Yellowtail", cursive;
+  --font-sans: "Archivo", "Archivo Fallback", system-ui, sans-serif;
+
+  --radius-brand: 0.375rem;
+
+  /* Hard "painted sign" shadows instead of soft blurs */
+  --shadow-sello: 4px 4px 0 var(--color-tinta);
+  --shadow-marco: inset 0 0 0 4px var(--color-papel-claro), inset 0 0 0 6px var(--color-adobo);
+  --shadow-tarjeta: inset 0 0 0 4px var(--color-papel-claro), inset 0 0 0 6px var(--color-adobo), 4px 4px 0 var(--color-tinta);
+  --shadow-placa: inset 0 0 0 3px var(--color-adobo), inset 0 0 0 5px var(--color-papel);
+}
+
+/* Self-hosted fonts (Latin subset). Only Anton is preloaded (see BaseLayout). */
+@font-face {
+  font-family: "Anton";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/anton-latin-400.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Yellowtail";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/yellowtail-latin-400.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/archivo-latin-400.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/archivo-latin-600.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/archivo-latin-700.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Metric-adjusted local fallbacks to limit layout shift while the web fonts swap in. */
+@font-face {
+  font-family: "Anton Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("Helvetica Bold");
+  size-adjust: 76%;
+  ascent-override: 155%;
+  descent-override: 43%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Helvetica");
+  size-adjust: 101%;
+  ascent-override: 87%;
+  descent-override: 21%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* Focus ring color; dark surfaces override it (see Section tone="nopal"). */
+  --focus: var(--color-tinta);
+  /* Light paper grain: a tiny pre-rendered raster tile (an SVG feTurbulence
+     filter here cost ~200 ms of main-thread paint on throttled mobile). */
+  --textura: url("/textura-papel.webp");
+}
+
+/* Named without a `bg-` prefix on purpose: tailwind-merge treats `bg-*` as a background-color class and would drop `bg-papel-oscuro`. */
+@utility textura-papel {
+  background-image: var(--textura);
+}
+
+/* Right-pointing pennant (arrow sign) used by the WhatsApp CTA. */
+@utility clip-pennant {
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    /* Keep focused elements and anchor targets clear of the fixed mobile bar (WCAG 2.4.11). */
+    scroll-padding-top: 1rem;
+    scroll-padding-bottom: calc(6.5rem + env(safe-area-inset-bottom));
+  }
+  @media (min-width: 64rem) {
+    html {
+      scroll-padding-bottom: 0;
+    }
+  }
+  body {
+    background-color: var(--color-background);
+    background-image: var(--textura);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* Steam over the pot: the only animation on the site. Transform and opacity only. */
+@keyframes vapor-subir {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 20%, 0) scale(0.8);
+  }
+  25% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--vapor-deriva, 8%), -110%, 0) scale(1.35);
+  }
+}
+
+.vapor {
+  position: absolute;
+  background: radial-gradient(
+    ellipse at 50% 55%,
+    color-mix(in srgb, var(--color-papel-claro) 88%, transparent) 0%,
+    color-mix(in srgb, var(--color-papel-claro) 45%, transparent) 40%,
+    transparent 72%
+  );
+  border-radius: 50%;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: vapor-subir 6.5s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vapor {
+    display: none;
+  }
+}

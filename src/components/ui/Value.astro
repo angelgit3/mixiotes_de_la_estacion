@@ -1,0 +1,35 @@
+---
+/**
+ * Value — renders a possibly-pending value: confirmed text, or the `porConfirmar` candidate, or a fallback
+ * label, followed by the Pending chip when the site is a draft.
+ *
+ * Props: value (Pending<string | number> | undefined), format? ((v) => string), fallback? (text shown when
+ *        there is no candidate; default site.ui.textoPendiente), chip? (default true), tone ("light" | "dark"),
+ *        class (applied to the text wrapper).
+ * Slots: none.
+ * Usage: <Value value={site.ubicacion.calle} />  ·  <Value value={price} format={formatPrice} fallback={site.ui.precioPendiente} />
+ * Depends on: Pending, src/data/site.ts, src/lib/pending.ts
+ */
+import type { Pending as PendingValue } from "../../data/schema";
+import { site } from "../../data/site";
+import { resolve } from "../../lib/pending";
+import PendingChip from "./Pending.astro";
+
+interface Props {
+  value: PendingValue<string | number> | undefined;
+  format?: ((v: string | number) => string) | undefined;
+  fallback?: string | undefined;
+  chip?: boolean;
+  tone?: "light" | "dark";
+  class?: string | undefined;
+}
+
+const { value, format, fallback = site.ui.textoPendiente, chip = true, tone = "light", class: className } = Astro.props;
+
+const resolved = resolve(value);
+const text =
+  resolved.value !== undefined ? (format ? format(resolved.value) : String(resolved.value)) : fallback;
+const showChip = resolved.pending && chip && site.estado === "borrador";
+---
+
+<span class={className}>{text}</span>{showChip && <PendingChip note={resolved.note} tone={tone} />}

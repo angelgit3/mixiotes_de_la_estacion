@@ -1,0 +1,60 @@
+---
+/**
+ * Photo — framed responsive picture (avif + webp) for an image declared in sitio.json `imagenes`.
+ * Keeps the source aspect ratio via width/height. Placeholder images get a "Foto pendiente · toma" tag.
+ *
+ * Props: name (key in site.imagenes), widths? (default 480-1200 clipped to the source width), sizes?,
+ *        priority? (eager + fetchpriority high; default lazy), class (frame).
+ * Slots: default (overlay content drawn above the picture, e.g. steam).
+ * Usage: <Photo name={site.heroe.imagen} priority sizes="(min-width: 1024px) 42vw, 100vw" />
+ * Depends on: astro:assets, src/data/site.ts, src/lib/cn.ts
+ */
+import { Picture } from "astro:assets";
+import { getImage, site } from "../../data/site";
+import { cn } from "../../lib/cn";
+
+interface Props {
+  name: string;
+  widths?: number[];
+  sizes?: string;
+  priority?: boolean;
+  class?: string | undefined;
+}
+
+const {
+  name,
+  widths = [360, 480, 640, 800, 1000, 1200],
+  sizes = "(min-width: 1152px) 560px, (min-width: 640px) 90vw, calc(100vw - 32px)",
+  priority = false,
+  class: className,
+} = Astro.props;
+
+const image = getImage(name);
+const usable = widths.filter((w) => w <= image.src.width);
+const tag = image.placeholder ? `${site.ui.fotoPendiente}${image.toma ? ` · ${image.toma}` : ""}` : null;
+---
+
+<div class={cn("relative overflow-hidden rounded-brand border-[3px] border-tinta bg-papel-oscuro shadow-sello", className)}>
+  <Picture
+    src={image.src}
+    alt={image.alt}
+    formats={["avif", "webp"]}
+    fallbackFormat="webp"
+    widths={usable}
+    sizes={sizes}
+    width={image.src.width}
+    height={image.src.height}
+    loading={priority ? "eager" : "lazy"}
+    decoding={priority ? "sync" : "async"}
+    fetchpriority={priority ? "high" : "auto"}
+    class="block h-auto w-full"
+  />
+  {Astro.slots.has("default") && <slot />}
+  {
+    tag && (
+      <span class="absolute bottom-2 left-2 z-10 max-w-[calc(100%-1rem)] rounded-sm bg-tinta px-2 py-1 text-xs font-semibold leading-snug text-papel">
+        {tag}
+      </span>
+    )
+  }
+</div>

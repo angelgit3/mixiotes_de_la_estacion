@@ -1,0 +1,32 @@
+---
+/**
+ * Wordmark — typographic logo: the business name on a small painted-sign plate (Anton, papel on adobo,
+ * inner line border). The first word is large, the rest sits below in small caps.
+ *
+ * Props: class.
+ * Slots: none (name comes from the resolved site name).
+ * Usage: <a href="#inicio"><Wordmark /></a>
+ * Depends on: src/data/site.ts, src/lib/pending.ts, src/lib/cn.ts
+ */
+import { site } from "../../data/site";
+import { resolve } from "../../lib/pending";
+import { cn } from "../../lib/cn";
+
+interface Props {
+  class?: string | undefined;
+}
+
+const { class: className } = Astro.props;
+const name = resolve(site.negocio.nombre).value ?? "";
+const [first = "", ...rest] = name.split(" ");
+---
+
+<span
+  class={cn(
+    "inline-flex min-h-12 -rotate-1 flex-col items-center justify-center rounded-sm bg-adobo px-5 py-1.5 font-display uppercase leading-none text-papel shadow-placa",
+    className,
+  )}
+>
+  <span class="text-2xl tracking-wider sm:text-3xl">{first}</span>
+  {rest.length > 0 && <span class="mt-0.5 text-xs tracking-[0.18em]">{rest.join(" ")}</span>}
+</span>

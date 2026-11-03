@@ -1,0 +1,35 @@
+---
+/**
+ * SectionHeading — h2 (Anton, uppercase) with a painted double rule, plus an optional intro paragraph.
+ *
+ * Props: id (the section id; the h2 gets `${id}-titulo`), title, intro?, tone ("papel" | "nopal" | "maiz",
+ *        selects heading color), class.
+ * Slots: none.
+ * Usage: <SectionHeading id="menu" title={site.menu.titulo} intro={site.menu.intro} />
+ * Depends on: tailwind-variants
+ */
+import { tv } from "tailwind-variants";
+
+interface Props {
+  id: string;
+  title: string;
+  intro?: string | undefined;
+  tone?: "papel" | "nopal" | "maiz";
+  class?: string | undefined;
+}
+
+const heading = tv({
+  base: "font-display text-4xl uppercase leading-[1.02] tracking-wide text-balance sm:text-5xl lg:text-6xl",
+  variants: {
+    tone: { papel: "text-primary", nopal: "text-papel", maiz: "text-tinta" },
+  },
+});
+
+const { id, title, intro, tone = "papel", class: className } = Astro.props;
+---
+
+<div class={className}>
+  <h2 id={`${id}-titulo`} class={heading({ tone })}>{title}</h2>
+  <span aria-hidden="true" class="mt-5 block h-2 w-24 border-y-[3px] border-current opacity-90"></span>
+  {intro && <p class="mt-5 max-w-2xl text-lg text-pretty sm:text-xl">{intro}</p>}
+</div>

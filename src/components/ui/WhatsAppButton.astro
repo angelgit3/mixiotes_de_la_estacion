@@ -1,0 +1,36 @@
+---
+/**
+ * WhatsAppButton — Button wired to the site's WhatsApp number with a prefilled message. When the number
+ * is still pending it renders the same shape as a non-link with the "Número pendiente" badge.
+ *
+ * Props: message ("apartar" | "eventos"), variant/size/class (forwarded to Button).
+ * Slots: default (label).
+ * Usage: <WhatsAppButton message="apartar" variant="pennant" size="lg">{site.heroe.ctaPrincipal}</WhatsAppButton>
+ * Depends on: Button, src/data/site.ts, src/lib/links.ts
+ */
+import { site } from "../../data/site";
+import { whatsappHref } from "../../lib/links";
+import Button from "./Button.astro";
+
+interface Props {
+  message: "apartar" | "eventos";
+  variant?: "pennant" | "primary" | "outline" | "maiz" | "link" | undefined;
+  size?: "md" | "lg" | undefined;
+  class?: string | undefined;
+}
+
+const { message, variant, size, class: className } = Astro.props;
+const href = whatsappHref(site.contacto.whatsapp, site.whatsapp[message]);
+---
+
+<Button
+  href={href}
+  external
+  variant={variant}
+  size={size}
+  class={className}
+  badge={site.ui.numeroPendiente}
+  srSuffix={site.ui.abreWhatsapp}
+>
+  <slot />
+</Button>

@@ -1,0 +1,118 @@
+---
+/**
+ * Visit — "Visítanos": facade photo, name, address, hours (table when confirmed), phone,
+ * the "solo para llevar" callout and the "Cómo llegar" button.
+ *
+ * Props: none.
+ * Slots: none.
+ * Usage: <Visit />
+ * Depends on: Section, SectionHeading, Value, Pending, Photo, MapsButton, src/data/site.ts, src/lib/*
+ */
+import { site } from "../../data/site";
+import { formatTime } from "../../lib/format";
+import { telHref } from "../../lib/links";
+import { confirmed, resolve } from "../../lib/pending";
+import MapsButton from "../ui/MapsButton.astro";
+import Pending from "../ui/Pending.astro";
+import Photo from "../ui/Photo.astro";
+import Section from "../ui/Section.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+import Value from "../ui/Value.astro";
+
+const data = site.visitanos;
+const draft = site.estado === "borrador";
+const name = resolve(site.negocio.nombre).value ?? "";
+const week = resolve(site.horario.semana);
+const phone = resolve(site.contacto.telefono);
+const phoneLink = telHref(confirmed(site.contacto.telefono));
+const dt = "text-sm font-bold uppercase tracking-[0.18em] text-primary";
+---
+
+<Section id="visitanos">
+  <SectionHeading id="visitanos" title={data.titulo} />
+  <div class="mt-12 grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
+    <div class="lg:sticky lg:top-6 lg:col-span-6">
+      <Photo name={data.imagen} sizes="(min-width: 1152px) 560px, (min-width: 1024px) 48vw, (min-width: 640px) 90vw, calc(100vw - 32px)" />
+    </div>
+    <div class="lg:col-span-6">
+      <p class="font-display text-3xl uppercase tracking-wide sm:text-4xl">
+        {name}
+        {draft && resolve(site.negocio.nombre).pending && <Pending note={resolve(site.negocio.nombre).note} />}
+      </p>
+      <dl class="mt-6 space-y-6 border-t-[3px] border-tinta pt-6 text-lg">
+        <div>
+          <dt class={dt}>{data.etiquetaDireccion}</dt>
+          <dd class="mt-1">
+            <address class="not-italic">
+              <span class="block"><Value value={site.ubicacion.calle} /></span>
+              <span class="block"><Value value={site.ubicacion.colonia} /></span>
+              <span class="block">{site.negocio.ciudad}, {site.negocio.region}</span>
+              <span class="block">
+                {site.ui.codigoPostal} <Value value={site.ubicacion.codigoPostal} />
+              </span>
+            </address>
+          </dd>
+        </div>
+        <div>
+          <dt class={dt}>{data.etiquetaHorario}</dt>
+          <dd class="mt-1">
+            {
+              week.value ? (
+                <>
+                  <table class="w-full max-w-sm border-collapse text-lg">
+                    <caption class="sr-only">{data.etiquetaHorario}</caption>
+                    <tbody>
+                      {week.value.map((d) => (
+                        <tr class="border-b-2 border-dotted border-tinta-suave">
+                          <th scope="row" class="py-1.5 pr-4 text-left font-bold">
+                            {site.ui.dias[d.dia]}
+                          </th>
+                          <td class="py-1.5 text-right">
+                            {d.cerrado ? (
+                              site.ui.cerrado
+                            ) : (
+                              <>
+                                {formatTime(d.abre ?? "")} – {formatTime(d.cierra ?? "")}
+                                {d.nota && <span class="block text-base text-tinta-suave">{d.nota}</span>}
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {week.pending && draft && <Pending note={week.note} />}
+                </>
+              ) : (
+                <>
+                  {site.ui.textoPendiente}
+                  {draft && <Pending note={week.note} />}
+                </>
+              )
+            }
+          </dd>
+        </div>
+        <div>
+          <dt class={dt}>{data.etiquetaTelefono}</dt>
+          <dd class="mt-1">
+            {
+              phoneLink ? (
+                <a href={phoneLink} class="inline-flex min-h-12 items-center font-bold underline underline-offset-4">
+                  {phone.value}
+                </a>
+              ) : (
+                <Value value={site.contacto.telefono} />
+              )
+            }
+          </dd>
+        </div>
+      </dl>
+      <p class="mt-8 inline-block -rotate-1 border-[3px] border-tinta bg-maiz px-4 py-3 text-lg font-bold shadow-sello">
+        {data.soloLlevar}
+      </p>
+      <div class="mt-8">
+        <MapsButton variant="primary" size="lg" class="min-h-14">{data.cta}</MapsButton>
+      </div>
+    </div>
+  </div>
+</Section>

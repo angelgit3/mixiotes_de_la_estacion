@@ -1,0 +1,43 @@
+---
+/**
+ * Sazon — "El sazón": 3 to 5 process steps, each with a flat illustration chosen by `ilustracion`.
+ * Disabled by default in sitio.json (secciones.sazon); fully implemented for review.
+ *
+ * Props: none.
+ * Slots: none.
+ * Usage: <Sazon />
+ * Depends on: Section, SectionHeading, SazonIcon, Value, src/data/site.ts
+ */
+import { site } from "../../data/site";
+import Section from "../ui/Section.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+import SazonIcon from "../ui/SazonIcon.astro";
+import Value from "../ui/Value.astro";
+
+const data = site.sazon;
+---
+
+<Section id="sazon" tone="oscuro">
+  <SectionHeading id="sazon" title={data.titulo} intro={data.intro} />
+  <ol class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+    {
+      data.pasos.map((paso, i) => (
+        <li class="relative rounded-brand border-[3px] border-tinta bg-papel-claro px-6 pb-7 pt-8 shadow-sello">
+          <span
+            aria-hidden="true"
+            class="absolute -top-4 left-5 flex size-10 items-center justify-center rounded-full border-[3px] border-tinta bg-maiz font-display text-xl leading-none"
+          >
+            {i + 1}
+          </span>
+          <SazonIcon name={paso.ilustracion} class="size-24" />
+          <h3 class="mt-4 font-display text-2xl uppercase tracking-wide text-primary">
+            <Value value={paso.titulo} />
+          </h3>
+          <p class="mt-2 text-lg text-pretty">
+            <Value value={paso.texto} />
+          </p>
+        </li>
+      ))
+    }
+  </ol>
+</Section>

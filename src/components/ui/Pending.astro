@@ -1,0 +1,32 @@
+---
+/**
+ * Pending — small dashed "Dato pendiente" chip that marks an unconfirmed value in draft mode.
+ *
+ * Props: note? (becomes the `title`, i.e. what is missing), tone ("light" | "dark", default "light"), class.
+ * Slots: none (label comes from site.ui.datoPendiente).
+ * Usage: <Pending note={resolved.note} />
+ * Depends on: src/data/site.ts, src/lib/cn.ts, tailwind-variants
+ */
+import { tv } from "tailwind-variants";
+import { site } from "../../data/site";
+
+interface Props {
+  note?: string | undefined;
+  tone?: "light" | "dark";
+  class?: string | undefined;
+}
+
+const chip = tv({
+  base: "ml-1.5 inline-block whitespace-nowrap rounded-brand border border-dashed px-1.5 py-0.5 align-middle font-sans text-xs font-semibold normal-case leading-none tracking-normal",
+  variants: {
+    tone: {
+      light: "border-tinta-suave bg-papel-claro/70 text-tinta-suave",
+      dark: "border-papel-oscuro bg-tinta/40 text-papel",
+    },
+  },
+});
+
+const { note, tone = "light", class: className } = Astro.props;
+---
+
+<span class={chip({ tone, class: className })} title={note}>{site.ui.datoPendiente}</span>
