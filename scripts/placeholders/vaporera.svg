@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500"><defs>
+  <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+    <circle cx="7" cy="7" r="3" fill="#E9DAC0"/><circle cx="22" cy="22" r="3" fill="#E9DAC0"/></pattern>
+  <pattern id="dotsM" width="26" height="26" patternUnits="userSpaceOnUse">
+    <circle cx="6" cy="6" r="3" fill="#D99A1F"/><circle cx="19" cy="19" r="3" fill="#D99A1F"/></pattern>
+  <pattern id="dotsR" width="26" height="26" patternUnits="userSpaceOnUse">
+    <circle cx="6" cy="6" r="2.8" fill="#6E1D13"/><circle cx="19" cy="19" r="2.8" fill="#6E1D13"/></pattern>
+  <pattern id="stripeV" width="120" height="10" patternUnits="userSpaceOnUse">
+    <rect width="60" height="10" fill="#9E2B1D"/><rect x="60" width="60" height="10" fill="#F3E9D8"/></pattern>
+</defs>
+  <rect width="1200" height="1500" fill="#F3E9D8"/><rect width="1200" height="1500" fill="url(#dots)"/>
+  <circle cx="600" cy="640" r="470" fill="#F0B83C" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <circle cx="600" cy="640" r="470" fill="url(#dotsM)" opacity=".55"/>
+  <circle cx="600" cy="640" r="470" fill="none" stroke="#9E2B1D" stroke-width="16" stroke-dasharray="2 34" stroke-linecap="round" transform="scale(.93) translate(46 44)"/>
+  <path d="M470,800 c-38,-93.6 38,-176.8 0,-260 s38,-166.4 0,-260" fill="none" stroke="#F3E9D8" stroke-width="40" stroke-linecap="round"/><path d="M600,760 c44,-84.6 -44,-159.8 0,-235 s-44,-150.4 0,-235" fill="none" stroke="#F3E9D8" stroke-width="40" stroke-linecap="round"/><path d="M735,800 c-36,-86.39999999999999 36,-163.20000000000002 0,-240 s36,-153.6 0,-240" fill="none" stroke="#F3E9D8" stroke-width="40" stroke-linecap="round"/>
+  <rect y="1370" width="1200" height="130" fill="#9E2B1D"/><rect y="1393.4" width="1200" height="13" fill="#F0B83C"/><rect y="1370" width="1200" height="6" fill="#1E1A16"/>
+  <g>
+  <ellipse cx="600" cy="1312" rx="357" ry="44.88" fill="#6E1D13" opacity=".35"/>
+  <rect x="202" y="1066.08" width="130" height="46" rx="23" fill="#D99A1F" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <rect x="868" y="1066.08" width="130" height="46" rx="23" fill="#D99A1F" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <ellipse cx="600" cy="960" rx="340" ry="81.6" fill="#1E1A16" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <g transform="rotate(-8 423.2 956)">
+  <path d="M331.4,956 C331.4,818.3 395.65999999999997,850.43 404.84,809.12
+    L441.56,809.12 C450.74,850.43 515,818.3 515,956 Q423.2,997.3100000000001 331.4,956 Z" fill="#D9B476" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M372.71,942.23 C368.12,882.56 391.07,864.2 404.84,841.25" fill="none" stroke="#B98B4A" stroke-width="6" stroke-linecap="round"/>
+  <path d="M469.1,937.64 C473.69,891.74 459.92,868.79 443.396,845.84" fill="none" stroke="#EBD3A2" stroke-width="6" stroke-linecap="round"/>
+  <path d="M403.00399999999996,809.12 L372.71,767.81 L418.61,795.3499999999999 L464.51,763.22 L443.396,809.12 Z" fill="#D9B476" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <rect x="398.414" y="796.268" width="49.57200000000001" height="18.360000000000003" rx="8.262" fill="#9E2B1D" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  </g><g transform="rotate(8 770 956)">
+  <path d="M678.2,956 C678.2,818.3 742.46,850.43 751.64,809.12
+    L788.36,809.12 C797.54,850.43 861.8,818.3 861.8,956 Q770,997.3100000000001 678.2,956 Z" fill="#D9B476" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M719.51,942.23 C714.92,882.56 737.87,864.2 751.64,841.25" fill="none" stroke="#B98B4A" stroke-width="6" stroke-linecap="round"/>
+  <path d="M815.9,937.64 C820.49,891.74 806.72,868.79 790.196,845.84" fill="none" stroke="#EBD3A2" stroke-width="6" stroke-linecap="round"/>
+  <path d="M749.804,809.12 L719.51,767.81 L765.41,795.3499999999999 L811.3100000000001,763.22 L790.196,809.12 Z" fill="#D9B476" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <rect x="745.2139999999999" y="796.268" width="49.57200000000001" height="18.360000000000003" rx="8.262" fill="#9E2B1D" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  </g><g transform="rotate(0 572.8 911.04)">
+  <path d="M467.4,911.04 C467.4,752.9399999999999 541.18,789.8299999999999 551.7199999999999,742.4
+    L593.88,742.4 C604.42,789.8299999999999 678.1999999999999,752.9399999999999 678.1999999999999,911.04 Q572.8,958.47 467.4,911.04 Z" fill="#D9B476" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M514.8299999999999,895.23 C509.55999999999995,826.7199999999999 535.91,805.64 551.7199999999999,779.29" fill="none" stroke="#B98B4A" stroke-width="6" stroke-linecap="round"/>
+  <path d="M625.5,889.9599999999999 C630.77,837.26 614.9599999999999,810.91 595.9879999999999,784.56" fill="none" stroke="#EBD3A2" stroke-width="6" stroke-linecap="round"/>
+  <path d="M549.612,742.4 L514.8299999999999,694.97 L567.53,726.5899999999999 L620.23,689.6999999999999 L595.9879999999999,742.4 Z" fill="#D9B476" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <rect x="544.342" y="727.644" width="56.916000000000004" height="21.080000000000002" rx="9.486" fill="#9E2B1D" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  </g><g transform="rotate(-4 498 996.72)">
+  <path d="M402.8,996.72 C402.8,853.9200000000001 469.44,887.24 478.96,844.4
+    L517.04,844.4 C526.56,887.24 593.2,853.9200000000001 593.2,996.72 Q498,1039.56 402.8,996.72 Z" fill="#D9B476" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M445.64,982.44 C440.88,920.5600000000001 464.68,901.52 478.96,877.72" fill="none" stroke="#B98B4A" stroke-width="6" stroke-linecap="round"/>
+  <path d="M545.6,977.6800000000001 C550.36,930.08 536.08,906.28 518.944,882.48" fill="none" stroke="#EBD3A2" stroke-width="6" stroke-linecap="round"/>
+  <path d="M477.056,844.4 L445.64,801.5600000000001 L493.24,830.12 L540.84,796.8 L518.944,844.4 Z" fill="#D9B476" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <rect x="472.296" y="831.072" width="51.40800000000001" height="19.040000000000003" rx="8.568" fill="#9E2B1D" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  </g><g transform="rotate(5 702 996.72)">
+  <path d="M606.8,996.72 C606.8,853.9200000000001 673.44,887.24 682.96,844.4
+    L721.04,844.4 C730.56,887.24 797.2,853.9200000000001 797.2,996.72 Q702,1039.56 606.8,996.72 Z" fill="#D9B476" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M649.64,982.44 C644.88,920.5600000000001 668.68,901.52 682.96,877.72" fill="none" stroke="#B98B4A" stroke-width="6" stroke-linecap="round"/>
+  <path d="M749.6,977.6800000000001 C754.36,930.08 740.08,906.28 722.944,882.48" fill="none" stroke="#EBD3A2" stroke-width="6" stroke-linecap="round"/>
+  <path d="M681.056,844.4 L649.64,801.5600000000001 L697.24,830.12 L744.84,796.8 L722.944,844.4 Z" fill="#D9B476" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <rect x="676.296" y="831.072" width="51.40800000000001" height="19.040000000000003" rx="8.568" fill="#9E2B1D" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  </g>
+  <path d="M260,960 A340,81.6 0 0 0 940,960 L916.2,1250 Q916.2,1290 876.2,1290 L323.8,1290 Q283.8,1290 283.8,1250 Z" fill="#9E2B1D" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M265.1,1026 A334.9,84.86399999999999 0 0 0 934.9,1026 L931.5,1078.8 A331.5,84.86399999999999 0 0 1 268.5,1078.8 Z" fill="#F0B83C" stroke="#1E1A16" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M328,1264 A272,48.959999999999994 0 0 0 872,1264" fill="none" stroke="#6E1D13" stroke-width="12" stroke-linecap="round" opacity=".55"/>
+  <path d="M260,960 A340,81.6 0 0 0 940,960" fill="none" stroke="#F0B83C" stroke-width="10" stroke-linecap="round"/>
+  <path d="M260,960 A340,81.6 0 0 0 940,960" fill="none" stroke="#1E1A16" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
+  </g>
+  </svg>
