@@ -1,0 +1,24 @@
+---
+import "../styles/global.css";
+import { site } from "../data/site";
+import { resolve, fillTemplate } from "../lib/pending";
+import { buildRestaurantJsonLd } from "../lib/jsonld";
+
+const name = resolve(site.negocio.nombre).value ?? "";
+const title = fillTemplate(site.seo.titulo, { nombre: name });
+const jsonLd = buildRestaurantJsonLd(site);
+---
+
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={site.seo.descripcion} />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <h1>{site.heroe.titulo}</h1>
+  </body>
+</html>
