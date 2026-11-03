@@ -1,0 +1,75 @@
+---
+/**
+ * SazonIcon — simple flat illustration for a "sazón" step, chosen by the `ilustracion` key. Decorative.
+ *
+ * Props: name ("adobo" | "envuelto" | "vapor" | "despacho"), class.
+ * Slots: none.
+ * Usage: <SazonIcon name={paso.ilustracion} class="size-20" />
+ * Depends on: src/data/schema.ts (SAZON_ILLUSTRATIONS), src/lib/cn.ts
+ */
+import type { SazonIllustration } from "../../data/schema";
+import { cn } from "../../lib/cn";
+
+interface Props {
+  name: SazonIllustration;
+  class?: string | undefined;
+}
+
+const { name, class: className } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 96 96"
+  aria-hidden="true"
+  focusable="false"
+  class={cn("stroke-tinta", className)}
+  fill="none"
+  stroke-width="4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  {
+    name === "adobo" && (
+      <>
+        <path d="M60 10 46 40" />
+        <ellipse cx="44" cy="44" rx="34" ry="9" class="fill-adobo-oscuro" />
+        <path d="M10 44h68c0 22-13 38-34 38S10 66 10 44Z" class="fill-adobo" />
+        <ellipse cx="44" cy="44" rx="34" ry="9" class="fill-adobo-oscuro" />
+        <circle cx="30" cy="44" r="3" class="fill-maiz stroke-none" />
+        <circle cx="46" cy="47" r="3" class="fill-maiz stroke-none" />
+        <circle cx="58" cy="43" r="3" class="fill-maiz stroke-none" />
+        <path d="M74 66c8-2 12 4 10 12" />
+      </>
+    )
+  }
+  {
+    name === "envuelto" && (
+      <>
+        <path d="M24 84c-6-26 2-42 24-46 22 4 30 20 24 46Z" class="fill-papel-oscuro" />
+        <path d="M36 24l12 14 12-14" class="fill-papel-oscuro" />
+        <rect x="39" y="35" width="18" height="8" rx="2" class="fill-adobo" />
+        <path d="M36 58c-2 8-1 14 2 20M60 60c2 8 2 12 0 18" stroke-width="3" />
+      </>
+    )
+  }
+  {
+    name === "vapor" && (
+      <>
+        <path d="M34 36c-7-6 7-10 0-18M48 34c-7-6 7-10 0-18M62 36c-7-6 7-10 0-18" />
+        <path d="M18 54h60l-4 26a6 6 0 0 1-6 5H28a6 6 0 0 1-6-5Z" class="fill-adobo" />
+        <rect x="12" y="46" width="72" height="10" rx="5" class="fill-maiz" />
+        <path d="M8 62h10M78 62h10" />
+      </>
+    )
+  }
+  {
+    name === "despacho" && (
+      <>
+        <path d="M36 34v-8a12 12 0 0 1 24 0v8" />
+        <path d="M22 34h52l4 50H18Z" class="fill-maiz" />
+        <circle cx="48" cy="60" r="10" class="fill-adobo" />
+        <path d="M43 60h10M48 55v10" stroke-width="3" class="stroke-papel" />
+      </>
+    )
+  }
+</svg>

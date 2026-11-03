@@ -8,7 +8,7 @@ import { z } from "zod";
 export interface PendingValue<T> {
   pendiente: true;
   nota: string;
-  porConfirmar?: T;
+  porConfirmar?: T | undefined;
 }
 
 /** Either a confirmed value or a pending marker. */
@@ -272,6 +272,10 @@ const baseSchema = z.strictObject({
     abreWhatsapp: text,
     abreMaps: text,
     inicio: text,
+    barraRapida: text,
+    codigoPostal: text,
+    estrellas: text,
+    tiposAviso: z.strictObject({ cerrado: text, horario: text, general: text }),
   }),
 });
 
@@ -406,3 +410,4 @@ export type DayEntry = z.infer<typeof dayEntry>;
 export type Notice = z.infer<typeof notice>;
 export type Review = z.infer<typeof review>;
 export type ImageEntry = z.infer<typeof image>;
+export type SazonIllustration = (typeof SAZON_ILLUSTRATIONS)[number];

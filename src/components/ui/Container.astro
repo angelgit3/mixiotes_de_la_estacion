@@ -1,0 +1,22 @@
+---
+/**
+ * Container — centered, max-width content wrapper with responsive gutters (16px on mobile).
+ *
+ * Props: HTMLAttributes<"div"> plus `as` (element tag, default "div"); `class` is merged last.
+ * Slots: default.
+ * Usage: <Container><p>…</p></Container>
+ * Depends on: src/lib/cn.ts
+ */
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../../lib/cn";
+
+interface Props extends HTMLAttributes<"div"> {
+  as?: "div" | "header" | "footer" | "nav";
+}
+
+const { as: Tag = "div", class: className, ...rest } = Astro.props;
+---
+
+<Tag class={cn("mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8", className)} {...rest}>
+  <slot />
+</Tag>

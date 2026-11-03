@@ -1,0 +1,50 @@
+---
+/**
+ * Gatherings — "Pedidos para reuniones": contrast section on nopal with dozen/kilo price tags,
+ * lead time, packaging photo and the "Cotiza por WhatsApp" CTA (events message).
+ *
+ * Props: none.
+ * Slots: none.
+ * Usage: <Gatherings />
+ * Depends on: Section, SectionHeading, Value, Photo, WhatsAppButton, src/data/site.ts, src/lib/format.ts
+ */
+import { site } from "../../data/site";
+import { formatPrice } from "../../lib/format";
+import Photo from "../ui/Photo.astro";
+import Section from "../ui/Section.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+import Value from "../ui/Value.astro";
+import WhatsAppButton from "../ui/WhatsAppButton.astro";
+
+const data = site.reuniones;
+---
+
+<Section id="reuniones" tone="nopal">
+  <div class="grid items-center gap-12 lg:grid-cols-12">
+    <div class="lg:col-span-7">
+      <SectionHeading id="reuniones" title={data.titulo} intro={data.texto} tone="nopal" />
+      <ul class="mt-10 grid gap-5 sm:grid-cols-2">
+        {
+          data.opciones.map((o) => (
+            <li class="rounded-brand border-[3px] border-papel bg-nopal-oscuro p-5">
+              <p class="font-display text-3xl uppercase tracking-wide">{site.ui.presentaciones[o.tipo]}</p>
+              <p class="mt-1 text-2xl font-bold">
+                <Value value={o.precio} format={(v) => formatPrice(Number(v))} fallback={site.ui.precioPendiente} tone="dark" />
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-6 text-lg">
+        <strong class="font-bold uppercase tracking-wide">{data.etiquetaAnticipacion}:</strong>{" "}
+        <Value value={data.anticipacion} tone="dark" />
+      </p>
+      <div class="mt-8">
+        <WhatsAppButton message="eventos" variant="maiz" size="lg" class="min-h-14">{data.cta}</WhatsAppButton>
+      </div>
+    </div>
+    <div class="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
+      <Photo name={data.imagen} class="border-papel shadow-none" sizes="(min-width: 1152px) 470px, (min-width: 1024px) 40vw, 384px" />
+    </div>
+  </div>
+</Section>

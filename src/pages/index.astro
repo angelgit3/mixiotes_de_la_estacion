@@ -1,24 +1,35 @@
 ---
-import "../styles/global.css";
+import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../data/site";
-import { resolve, fillTemplate } from "../lib/pending";
-import { buildRestaurantJsonLd } from "../lib/jsonld";
+import NoticeBar from "../components/sections/NoticeBar.astro";
+import Header from "../components/sections/Header.astro";
+import Hero from "../components/sections/Hero.astro";
+import HowToOrder from "../components/sections/HowToOrder.astro";
+import Menu from "../components/sections/Menu.astro";
+import Sazon from "../components/sections/Sazon.astro";
+import Gatherings from "../components/sections/Gatherings.astro";
+import Notices from "../components/sections/Notices.astro";
+import Reviews from "../components/sections/Reviews.astro";
+import Visit from "../components/sections/Visit.astro";
+import Footer from "../components/sections/Footer.astro";
+import MobileBar from "../components/sections/MobileBar.astro";
 
-const name = resolve(site.negocio.nombre).value ?? "";
-const title = fillTemplate(site.seo.titulo, { nombre: name });
-const jsonLd = buildRestaurantJsonLd(site);
+const { secciones } = site;
 ---
 
-<!doctype html>
-<html lang="es-MX">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={site.seo.descripcion} />
-    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
-  </head>
-  <body>
-    <h1>{site.heroe.titulo}</h1>
-  </body>
-</html>
+<BaseLayout>
+  <NoticeBar />
+  <Header />
+  <main id="contenido">
+    <Hero />
+    {secciones.comoApartar && <HowToOrder />}
+    {secciones.menu && <Menu />}
+    {secciones.sazon && <Sazon />}
+    {secciones.reuniones && <Gatherings />}
+    {secciones.avisos && <Notices />}
+    {secciones.resenas && <Reviews />}
+    {secciones.visitanos && <Visit />}
+  </main>
+  <Footer />
+  <MobileBar />
+</BaseLayout>

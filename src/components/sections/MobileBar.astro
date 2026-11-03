@@ -1,0 +1,29 @@
+---
+/**
+ * MobileBar — fixed bottom action bar for phones/tablets (hidden from 1024px): WhatsApp CTA + "Cómo llegar".
+ * Respects the iOS safe area; the page body reserves matching bottom padding (global.css).
+ *
+ * Props: none.
+ * Slots: none.
+ * Usage: <MobileBar />
+ * Depends on: WhatsAppButton, MapsButton, src/data/site.ts
+ */
+import { site } from "../../data/site";
+import MapsButton from "../ui/MapsButton.astro";
+import WhatsAppButton from "../ui/WhatsAppButton.astro";
+---
+
+<div
+  role="region"
+  aria-label={site.ui.barraRapida}
+  class="fixed inset-x-0 bottom-0 z-40 border-t-4 border-tinta bg-papel-claro pb-[calc(0.5rem+env(safe-area-inset-bottom))] pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))] pt-2 lg:hidden"
+>
+  <div class="mx-auto flex max-w-xl items-stretch gap-2">
+    <WhatsAppButton message="apartar" variant="pennant" class="min-w-0 flex-[1.7] pl-3 pr-9 text-[0.8125rem] min-[400px]:text-sm">
+      {site.heroe.ctaPrincipal}
+    </WhatsAppButton>
+    <MapsButton variant="outline" class="min-w-0 flex-1 px-2 text-[0.8125rem] min-[400px]:text-sm">
+      {site.heroe.ctaSecundario}
+    </MapsButton>
+  </div>
+</div>

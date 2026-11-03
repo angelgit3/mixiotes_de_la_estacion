@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
+    "screenshots": "node scripts/screenshots.mjs",
     "verify": "npm run check && npm run test && npm run build"
   },
   "dependencies": {

@@ -1,0 +1,39 @@
+---
+/**
+ * Section — page block with an anchor id, a surface tone and `aria-labelledby` wired to `${id}-titulo`.
+ *
+ * Props: id (required, used as anchor), tone ("papel" | "oscuro" | "nopal" | "maiz", default "papel"),
+ *        plus HTMLAttributes<"section">; `class` wins.
+ * Slots: default (put a <SectionHeading id={id}> inside so the heading id matches).
+ * Usage: <Section id="menu" tone="oscuro"><SectionHeading id="menu" title="…" /></Section>
+ * Depends on: Container, src/lib/cn.ts, tailwind-variants
+ */
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+import Container from "./Container.astro";
+
+interface Props extends HTMLAttributes<"section"> {
+  id: string;
+  tone?: "papel" | "oscuro" | "nopal" | "maiz";
+}
+
+const section = tv({
+  base: "py-16 sm:py-20 lg:py-24",
+  variants: {
+    tone: {
+      papel: "text-foreground",
+      oscuro: "border-y-4 border-tinta bg-papel-oscuro bg-textura text-foreground",
+      nopal: "border-y-4 border-tinta bg-nopal text-papel [--focus:var(--color-maiz)]",
+      maiz: "border-y-4 border-tinta bg-maiz text-tinta",
+    },
+  },
+});
+
+const { id, tone = "papel", class: className, ...rest } = Astro.props;
+---
+
+<section id={id} aria-labelledby={`${id}-titulo`} class={section({ tone, class: className })} {...rest}>
+  <Container>
+    <slot />
+  </Container>
+</section>

@@ -1,0 +1,25 @@
+---
+/**
+ * MapsButton — "Cómo llegar" link to Google Maps (confirmed share URL, else an address search).
+ *
+ * Props: variant/size/class (forwarded to Button).
+ * Slots: default (label).
+ * Usage: <MapsButton variant="outline">{site.heroe.ctaSecundario}</MapsButton>
+ * Depends on: Button, src/data/site.ts, src/lib/links.ts
+ */
+import { site } from "../../data/site";
+import { mapsHref } from "../../lib/links";
+import Button from "./Button.astro";
+
+interface Props {
+  variant?: "pennant" | "primary" | "outline" | "maiz" | "link" | undefined;
+  size?: "md" | "lg" | undefined;
+  class?: string | undefined;
+}
+
+const { variant, size, class: className } = Astro.props;
+---
+
+<Button href={mapsHref(site)} external variant={variant} size={size} class={className} srSuffix={site.ui.abreMaps}>
+  <slot />
+</Button>

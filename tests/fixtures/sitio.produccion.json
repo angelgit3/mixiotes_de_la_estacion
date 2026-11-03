@@ -321,6 +321,14 @@
     "cerrado": "Cerrado",
     "abreWhatsapp": "Abre WhatsApp",
     "abreMaps": "Abre Google Maps",
-    "inicio": "Ir al inicio"
+    "inicio": "Ir al inicio",
+    "barraRapida": "Acciones rápidas",
+    "codigoPostal": "C.P.",
+    "estrellas": "{n} de 5 estrellas",
+    "tiposAviso": {
+      "cerrado": "Cerrado",
+      "horario": "Horario",
+      "general": "Aviso"
+    }
   }
 }
