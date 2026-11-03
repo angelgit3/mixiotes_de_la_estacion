@@ -87,7 +87,7 @@ sitio.json no es válido (estado: borrador):
 |---|---|
 | `estado` | `"borrador"` o `"produccion"` (ver más abajo) |
 | `negocio` | nombre, ciudad, región, tipo de cocina |
-| `seo` | dominio (`url`), título, descripción, imagen para redes, color |
+| `seo` | dominio (`url`), título (`titulo`, con `{nombre}`), título y nombre corto provisionales (se usan mientras el nombre del negocio no esté confirmado), descripción, imagen para redes, color |
 | `contacto` | `whatsapp`, `telefono`, `redes` |
 | `whatsapp` | plantillas de los mensajes prellenados |
 | `ubicacion` | calle, colonia, código postal, enlace de Maps, coordenadas |
@@ -112,7 +112,8 @@ Un dato sin confirmar se ve así:
 
 - `pendiente: true` marca que falta confirmarlo.
 - `nota` explica qué falta (el validador la muestra en la lista de pendientes).
-- `porConfirmar` (opcional) es un candidato **no confirmado**. En borrador se muestra con la insignia «Dato pendiente»; nunca se usa en los datos estructurados (JSON-LD) ni en enlaces de teléfono o WhatsApp. La única excepción es el botón «Cómo llegar»: en borrador busca en Google Maps la dirección por confirmar, para poder probarlo.
+- `porConfirmar` (opcional) es un candidato **no confirmado**. En borrador se muestra con la insignia «Dato pendiente»; nunca se usa en los datos estructurados (JSON-LD) ni en enlaces de teléfono o WhatsApp. La única excepción es el botón «Cómo llegar»: en borrador busca en Google Maps la dirección por confirmar, para poder probarlo; en borrador, si la dirección sigue pendiente, ese botón muestra la insignia «Dirección pendiente».
+- Mientras `negocio.nombre` esté pendiente, el `<title>`, `og:title`, `twitter:title` y el manifiesto usan `seo.tituloProvisional` / `seo.nombreCortoProvisional` (y no se emite `og:site_name`). El logotipo del encabezado sí muestra el nombre candidato, acompañado de la insignia «Dato pendiente».
 
 Para confirmarlo, **reemplaza todo el objeto** por el valor final:
 
@@ -276,6 +277,7 @@ node scripts/placeholders/generate.mjs
 
 - Los datos sin confirmar se muestran marcados con la insignia «Dato pendiente».
 - El botón de WhatsApp aparece como «Número pendiente» (sin enlace).
+- Los botones «Cómo llegar» llevan la insignia «Dirección pendiente» mientras la dirección no esté confirmada.
 - Las fotos provisionales se aceptan.
 
 > No publiques la versión borrador en el dominio público: muestra datos sin confirmar (aunque marcados). Para que el dueño la revise, usa una URL de vista previa.

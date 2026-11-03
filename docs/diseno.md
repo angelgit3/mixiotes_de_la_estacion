@@ -45,7 +45,11 @@ Las tres tienen ñ, acentos, ¿ ¡ « » (ver `fonts.md`). Total cercano a 80 KB
 - `components/sections/`: NoticeBar, Header, MobileBar, Hero, HowToOrder, Menu, Sazon, Gatherings, Notices, Reviews, Visit, Footer.
 - `pages/index.astro` los ordena según `secciones` de `sitio.json`.
 
-Datos pendientes: `Value` muestra el valor o `porConfirmar` y añade la insignia «Dato pendiente» solo en borrador. Si el WhatsApp está pendiente, los botones son un `span` con la misma forma y la insignia «Número pendiente».
+Datos pendientes: `Value` muestra el valor o `porConfirmar` y añade la insignia «Dato pendiente» solo en borrador. Si el WhatsApp está pendiente, los botones son un `span` con la misma forma y la insignia «Número pendiente». Los botones «Cómo llegar» (`MapsButton`) muestran la insignia «Dirección pendiente» (mismo estilo) mientras `mapsUrl` y la calle o colonia estén pendientes.
+
+Utilidad `textura-papel` (antes `bg-textura`): añade el grano de papel como `background-image`. No lleva prefijo `bg-` a propósito: tailwind-merge lo confundía con un color de fondo y eliminaba `bg-papel-oscuro` en `Section`.
+
+Accesibilidad: `html` define `scroll-padding-top/bottom` (el inferior reserva la barra móvil fija, < 64rem) para que el foco y los anclas no queden tapados; los botones animan solo `background-color`, `color` y `border-color` (no `outline-color`) para que el anillo de foco no parpadee.
 
 ## Movimiento
 La única animación es el vapor sobre la vaporera (`.vapor`): solo `transform` y `opacity`, y se oculta con `prefers-reduced-motion: reduce`. El desplazamiento suave también se desactiva con esa preferencia.
